@@ -1,0 +1,18 @@
+type: 'application'
+
+workspace:
+  inheritedTasks:
+    exclude: ['typecheck']
+
+toolchain:
+  typescript:
+    disabled: true
+
+fileGroups:
+  app:
+    - 'public/index.html'
+
+tasks:
+  dev:
+    command: 'vite'
+    local: true

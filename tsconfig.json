@@ -6,6 +6,9 @@
       "path": "libraries/core"
     },
     {
+      "path": "libraries/react"
+    },
+    {
       "path": "libraries/typescript"
     },
     {
