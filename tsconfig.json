@@ -9,7 +9,7 @@
       "path": "libraries/react"
     },
     {
-      "path": "libraries/typescript"
+      "path": "libraries/core"
     },
     {
       "path": "tools/release-config"
