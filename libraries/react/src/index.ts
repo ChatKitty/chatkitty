@@ -1,3 +1,1 @@
-export const func = () => {
-    console.log('yo!');
-}
+export * from "./components/ChatUi";

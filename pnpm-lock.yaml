@@ -59,6 +59,9 @@ importers:
       '@chatkitty/react':
         specifier: workspace:*
         version: link:../../libraries/react
+      chatkitty:
+        specifier: workspace:*
+        version: link:../../libraries/typescript
       react:
         specifier: ^19.0.0
         version: 19.0.0
@@ -234,12 +237,12 @@ importers:
 
   libraries/react:
     dependencies:
+      chatkitty:
+        specifier: workspace:*
+        version: link:../typescript
       react:
         specifier: ^19.0.0
         version: 19.0.0
-      react-dom:
-        specifier: ^19.0.0
-        version: 19.0.0(react@19.0.0)
     devDependencies:
       '@eslint/js':
         specifier: ^9.21.0
