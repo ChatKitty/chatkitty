@@ -2,7 +2,7 @@
   "files": [],
   "references": [
     {
-      "path": "../../libraries/core"
+      "path": "../../libraries/legacy"
     },
     {
       "path": "./tsconfig.app.json"

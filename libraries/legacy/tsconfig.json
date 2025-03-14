@@ -9,6 +9,6 @@
     }
   ],
   "compilerOptions": {
-    "outDir": "../../.moon/cache/types/libraries/core"
+    "outDir": "../../.moon/cache/types/libraries/legacy"
   }
 }

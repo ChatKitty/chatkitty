@@ -3,7 +3,7 @@
   "files": [],
   "references": [
     {
-      "path": "libraries/core"
+      "path": "libraries/legacy"
     },
     {
       "path": "libraries/react"
