@@ -3,8 +3,15 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "main": "dist/chatkitty-react.js",
+  "main": "dist/chatkitty-react.umd.js",
+  "module": "dist/chatkitty-react.es.js",
   "types": "dist/chatkitty-react.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/chatkitty-react.es.js",
+      "require": "./dist/chatkitty-react.umd.js"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
