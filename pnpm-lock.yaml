@@ -61,7 +61,7 @@ importers:
         version: link:../../libraries/react
       chatkitty:
         specifier: workspace:*
-        version: link:../../libraries/typescript
+        version: link:../../libraries/core
       react:
         specifier: ^19.0.0
         version: 19.0.0
@@ -107,7 +107,7 @@ importers:
     dependencies:
       chatkitty:
         specifier: workspace:*
-        version: link:../../libraries/typescript
+        version: link:../../libraries/core
       core-js:
         specifier: ^3.8.3
         version: 3.38.1
@@ -144,7 +144,7 @@ importers:
     dependencies:
       '@chatkitty/core':
         specifier: workspace:*
-        version: link:../../libraries/core
+        version: link:../../libraries/legacy
       vue:
         specifier: ^3.4.27
         version: 3.5.12(typescript@5.7.3)
@@ -196,6 +196,27 @@ importers:
     dependencies:
       '@stomp/rx-stomp':
         specifier: ^2.0.0
+        version: 2.0.0(@stomp/stompjs@7.0.0)(rxjs@7.8.1)(uuid@9.0.1)
+      '@stomp/stompjs':
+        specifier: ^7.0.0
+        version: 7.0.0
+      axios:
+        specifier: ^1.5.1
+        version: 1.7.7
+      lit-html:
+        specifier: ^2.7.0
+        version: 2.8.0
+      rxjs:
+        specifier: ^7.2.0
+        version: 7.8.1
+      uuid:
+        specifier: ^9.0.0
+        version: 9.0.1
+
+  libraries/legacy:
+    dependencies:
+      '@stomp/rx-stomp':
+        specifier: ^2.0.0
         version: 2.0.0(@stomp/stompjs@7.0.0)(rxjs@7.8.1)(uuid@10.0.0)
       '@stomp/stompjs':
         specifier: ^7.0.0
@@ -239,7 +260,7 @@ importers:
     dependencies:
       chatkitty:
         specifier: workspace:*
-        version: link:../typescript
+        version: link:../core
       react:
         specifier: ^19.0.0
         version: 19.0.0
@@ -277,27 +298,6 @@ importers:
       vite:
         specifier: ^6.2.0
         version: 6.2.0(@types/node@22.7.5)(sass@1.79.5)(terser@5.36.0)(yaml@2.6.0)
-
-  libraries/typescript:
-    dependencies:
-      '@stomp/rx-stomp':
-        specifier: ^2.0.0
-        version: 2.0.0(@stomp/stompjs@7.0.0)(rxjs@7.8.1)(uuid@9.0.1)
-      '@stomp/stompjs':
-        specifier: ^7.0.0
-        version: 7.0.0
-      axios:
-        specifier: ^1.5.1
-        version: 1.7.7
-      lit-html:
-        specifier: ^2.7.0
-        version: 2.8.0
-      rxjs:
-        specifier: ^7.2.0
-        version: 7.8.1
-      uuid:
-        specifier: ^9.0.0
-        version: 9.0.1
 
   tools/release-config: {}
 
