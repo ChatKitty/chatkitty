@@ -1,0 +1,57 @@
+{
+  "name": "@chatkitty/core",
+  "version": "1.11.0",
+  "description": "ChatKitty core JS package.",
+  "keywords": [
+    "node",
+    "lib",
+    "esm"
+  ],
+  "author": "ChatKitty",
+  "license": "MIT",
+  "repository": "https://github.com/ChatKitty/chatkitty-js",
+  "type": "module",
+  "scripts": {
+    "release": "release-it --ci"
+  },
+  "packemon": {
+    "format": [
+      "esm"
+    ],
+    "platform": "browser"
+  },
+  "engines": {
+    "node": ">=14.15.0"
+  },
+  "files": [
+    "esm/**/*",
+    "src/**/*"
+  ],
+  "main": "./esm/index.js",
+  "module": "./esm/index.js",
+  "types": "./esm/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./esm/index.d.ts",
+      "import": "./esm/index.js"
+    }
+  },
+  "dependencies": {
+    "@stomp/rx-stomp": "^2.0.0",
+    "@stomp/stompjs": "^7.0.0",
+    "axios": "^0.27.2",
+    "base-64": "^1.0.0",
+    "rxjs": "^7.8.1",
+    "sockjs-client": "^1.6.1",
+    "text-encoding-polyfill": "^0.6.7",
+    "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "@chatkitty/release-config": "workspace:*",
+    "@types/base-64": "^1.0.2",
+    "@types/node": "^22.7.5",
+    "@types/sockjs-client": "^1.5.4",
+    "@types/uuid": "^10.0.0"
+  }
+}
