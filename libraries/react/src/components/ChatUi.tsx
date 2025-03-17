@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { connectApi, loadChatUi } from "chatkitty";
 
-export const ChatUi = ({apiKey, username, widgetId}: {apiKey: string, username: string, widgetId: string}) => {
+export const ChatUi = () => {
     useEffect(() => {
         const initializeChat = async () => {
             const connection = await connectApi({
-                apiKey: apiKey,
-                username: username
+                apiKey: "afaac908-1db3-4b5c-a7ae-c040b9684403",
+                username: "2989c53a-d0c5-4222-af8d-fbf7b0c74ec6"
             });
 
             const { user, unreadChannelsCount, notifications, updateUser } = connection;
@@ -18,7 +18,7 @@ export const ChatUi = ({apiKey, username, widgetId}: {apiKey: string, username: 
 
             loadChatUi(
                 {
-                    widgetId: widgetId,
+                    widgetId: "UWiEkKvdAaUJ1xut",
                     container: { height: "100%" },
                     audio: { enabled: true },
                     components: {
@@ -46,6 +46,11 @@ export const ChatUi = ({apiKey, username, widgetId}: {apiKey: string, username: 
     }, []);
 
     return (
-        <div id="chat-ui"></div>
+        <div className="flex flex-col h-screen">
+            <div className="flex justify-center h-[125px] sm:hidden">
+                <img src="./assets/logo.png" alt="Example App Logo" width="125" height="125" />
+            </div>
+            <div className="flex-1 min-h-0" id="chat-ui"></div>
+        </div>
     );
 };

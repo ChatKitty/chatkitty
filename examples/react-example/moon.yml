@@ -14,5 +14,5 @@ fileGroups:
 
 tasks:
   dev:
-    command: 'vite --host'
+    command: 'vite'
     local: true

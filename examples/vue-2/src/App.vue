@@ -109,7 +109,7 @@ export default {
 .container {
   display: flex;
   flex-direction: column;
-  height: 100svh; /* Assuming you want to take the full viewport height */
+  height: 100vh; /* Assuming you want to take the full viewport height */
 }
 
 .header {
