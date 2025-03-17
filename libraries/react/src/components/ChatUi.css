@@ -1,0 +1,12 @@
+.logo-container {
+    display: none;
+    height: 125px;
+}
+
+@media (width >= 640px) {
+    .logo-container {
+        display: flex;
+        justify-content: center;
+
+    }
+}
