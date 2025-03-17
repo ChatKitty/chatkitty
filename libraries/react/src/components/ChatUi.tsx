@@ -1,6 +1,5 @@
-import {useEffect} from "react";
-import {connectApi, loadChatUi} from "chatkitty";
-import './ChatUi.css';
+import { useEffect } from "react";
+import { connectApi, loadChatUi } from "chatkitty";
 
 export const ChatUi = ({apiKey, username, widgetId}: {apiKey: string, username: string, widgetId: string}) => {
     useEffect(() => {
