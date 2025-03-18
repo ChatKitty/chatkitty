@@ -1,7 +1,12 @@
 {
+  "compilerOptions": {
+    "outDir": "dist",
+    "declaration": true
+  },
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "exclude": ["src/App.vue", "src/main.ts"]
 }
