@@ -14,7 +14,9 @@ fileGroups:
 
 tasks:
   dev:
-    command: 'vite --host'
+    command: 'pnpm run dev'
     local: true
   build:
     command: 'pnpm run build'
+  install:
+    command: 'pnpm install'
