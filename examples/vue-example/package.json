@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "vue": "^3.5.13",
-    "@chatkitty/vue": "file:../../libraries/vue"
+    "@chatkitty/vue": "workspace:*",
+    "chatkitty": "workspace:*"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.1",

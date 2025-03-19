@@ -1,11 +1,18 @@
 {
   "compilerOptions": {
-    "outDir": "dist",
+    "outDir": "../../.moon/cache/types/libraries/vue",
     "declaration": true
   },
   "files": [],
   "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "../core"
+    }
   ]
 }
