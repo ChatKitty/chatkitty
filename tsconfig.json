@@ -3,13 +3,16 @@
   "files": [],
   "references": [
     {
+      "path": "libraries/core"
+    },
+    {
       "path": "libraries/legacy"
     },
     {
       "path": "libraries/react"
     },
     {
-      "path": "libraries/core"
+      "path": "libraries/vue"
     },
     {
       "path": "tools/release-config"
