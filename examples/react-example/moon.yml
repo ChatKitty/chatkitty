@@ -13,6 +13,10 @@ fileGroups:
     - 'public/index.html'
 
 tasks:
+  build:
+    command: "tsc -b && vite build"
+  install:
+    command: 'pnpm install'
   dev:
     command: 'vite --host'
     local: true

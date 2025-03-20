@@ -8,6 +8,7 @@
   "types": "dist/chatkitty-react.d.ts",
   "exports": {
     ".": {
+      "types": "dist/chatkitty-react.d.ts",
       "import": "./dist/chatkitty-react.es.js",
       "require": "./dist/chatkitty-react.umd.js"
     }
