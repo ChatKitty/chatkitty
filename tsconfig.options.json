@@ -1,18 +1,38 @@
 {
   "extends": "tsconfig-moon/tsconfig.json",
   "compilerOptions": {
+    "paths": {
+      "angular": [
+        "./dist/angular"
+      ]
+    },
+    "outDir": "./dist/out-tsc",
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
     "lib": ["esnext", "dom"],
     "module": "esnext",
     "moduleResolution": "node",
     "target": "es2022",
-    "composite": true,
     "declaration": true,
     "declarationMap": true,
-    "emitDeclarationOnly": true,
     "incremental": true,
     "noEmit": false,
     "noEmitOnError": true,
     "skipLibCheck": true,
     "verbatimModuleSyntax": false
+  },
+  "compileOnSave": false,
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
   }
 }

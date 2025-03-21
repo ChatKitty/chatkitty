@@ -3,6 +3,9 @@
   "files": [],
   "references": [
     {
+      "path": "libraries/angular"
+    },
+    {
       "path": "libraries/core"
     },
     {
