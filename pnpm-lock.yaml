@@ -54,6 +54,76 @@ importers:
         specifier: ^4.5.3
         version: 4.5.3(@types/node@22.7.5)(rollup@4.34.9)(typescript@5.7.3)(vite@6.2.0(@types/node@22.7.5)(jiti@1.21.7)(less@4.2.2)(sass@1.86.0)(terser@5.39.0)(yaml@2.6.0))
 
+  examples/angular-example:
+    dependencies:
+      '@angular/common':
+        specifier: ^19.2.0
+        version: 19.2.3(@angular/core@19.2.3(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1)
+      '@angular/compiler':
+        specifier: ^19.2.0
+        version: 19.2.3
+      '@angular/core':
+        specifier: ^19.2.0
+        version: 19.2.3(rxjs@7.8.1)(zone.js@0.15.0)
+      '@angular/forms':
+        specifier: ^19.2.0
+        version: 19.2.3(@angular/common@19.2.3(@angular/core@19.2.3(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.2.3(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@19.2.3(@angular/common@19.2.3(@angular/core@19.2.3(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.2.3(rxjs@7.8.1)(zone.js@0.15.0)))(rxjs@7.8.1)
+      '@angular/platform-browser':
+        specifier: ^19.2.0
+        version: 19.2.3(@angular/common@19.2.3(@angular/core@19.2.3(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.2.3(rxjs@7.8.1)(zone.js@0.15.0))
+      '@angular/platform-browser-dynamic':
+        specifier: ^19.2.0
+        version: 19.2.3(@angular/common@19.2.3(@angular/core@19.2.3(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/compiler@19.2.3)(@angular/core@19.2.3(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@19.2.3(@angular/common@19.2.3(@angular/core@19.2.3(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.2.3(rxjs@7.8.1)(zone.js@0.15.0)))
+      '@angular/router':
+        specifier: ^19.2.0
+        version: 19.2.3(@angular/common@19.2.3(@angular/core@19.2.3(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.2.3(rxjs@7.8.1)(zone.js@0.15.0))(@angular/platform-browser@19.2.3(@angular/common@19.2.3(@angular/core@19.2.3(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.2.3(rxjs@7.8.1)(zone.js@0.15.0)))(rxjs@7.8.1)
+      '@chatkitty/angular':
+        specifier: file:../../libraries/angular/dist/chat-ui
+        version: file:libraries/angular/dist/chat-ui(@angular/common@19.2.3(@angular/core@19.2.3(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.2.3(rxjs@7.8.1)(zone.js@0.15.0))
+      rxjs:
+        specifier: ~7.8.0
+        version: 7.8.1
+      tslib:
+        specifier: ^2.3.0
+        version: 2.8.1
+      zone.js:
+        specifier: ~0.15.0
+        version: 0.15.0
+    devDependencies:
+      '@angular-devkit/build-angular':
+        specifier: ^19.2.4
+        version: 19.2.4(@angular/compiler-cli@19.2.3(@angular/compiler@19.2.3)(typescript@5.7.3))(@angular/compiler@19.2.3)(@swc/core@1.7.36(@swc/helpers@0.5.13))(@types/node@22.7.5)(chokidar@4.0.1)(html-webpack-plugin@5.6.0(webpack@5.98.0(@swc/core@1.7.36(@swc/helpers@0.5.13))(esbuild@0.25.1)))(jiti@1.21.7)(karma@6.4.4)(ng-packagr@19.2.0(@angular/compiler-cli@19.2.3(@angular/compiler@19.2.3)(typescript@5.7.3))(tslib@2.8.1)(typescript@5.7.3))(typescript@5.7.3)(vite@6.2.0(@types/node@22.7.5)(jiti@1.21.7)(less@4.2.2)(sass@1.85.0)(terser@5.39.0)(yaml@2.6.0))(yaml@2.6.0)
+      '@angular/cli':
+        specifier: ^19.2.4
+        version: 19.2.4(@types/node@22.7.5)(chokidar@4.0.1)
+      '@angular/compiler-cli':
+        specifier: ^19.2.0
+        version: 19.2.3(@angular/compiler@19.2.3)(typescript@5.7.3)
+      '@types/jasmine':
+        specifier: ~5.1.0
+        version: 5.1.7
+      jasmine-core:
+        specifier: ~5.6.0
+        version: 5.6.0
+      karma:
+        specifier: ~6.4.0
+        version: 6.4.4
+      karma-chrome-launcher:
+        specifier: ~3.2.0
+        version: 3.2.0
+      karma-coverage:
+        specifier: ~2.2.0
+        version: 2.2.1
+      karma-jasmine:
+        specifier: ~5.1.0
+        version: 5.1.0(karma@6.4.4)
+      karma-jasmine-html-reporter:
+        specifier: ~2.1.0
+        version: 2.1.0(jasmine-core@5.6.0)(karma-jasmine@5.1.0(karma@6.4.4))(karma@6.4.4)
+      typescript:
+        specifier: ~5.7.2
+        version: 5.7.3
+
   examples/react-example:
     dependencies:
       '@chatkitty/react':
@@ -1341,6 +1411,12 @@ packages:
   '@boost/translate@5.0.0':
     resolution: {integrity: sha512-asZzllaUBojMNoLv20TRji7xo8Sar3nSDbLqy6uXyd6Bbp94CI9OPbiNpPHFj/lNzYV456Dht9uXK5QySICWyA==}
     engines: {node: '>=18.12.0'}
+
+  '@chatkitty/angular@file:libraries/angular/dist/chat-ui':
+    resolution: {directory: libraries/angular/dist/chat-ui, type: directory}
+    peerDependencies:
+      '@angular/common': ^19.2.0
+      '@angular/core': ^19.2.0
 
   '@colors/colors@1.5.0':
     resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
@@ -10647,6 +10723,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
       - typescript
+
+  '@chatkitty/angular@file:libraries/angular/dist/chat-ui(@angular/common@19.2.3(@angular/core@19.2.3(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.2.3(rxjs@7.8.1)(zone.js@0.15.0))':
+    dependencies:
+      '@angular/common': 19.2.3(@angular/core@19.2.3(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1)
+      '@angular/core': 19.2.3(rxjs@7.8.1)(zone.js@0.15.0)
+      tslib: 2.8.1
 
   '@colors/colors@1.5.0': {}
 

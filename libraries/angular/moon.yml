@@ -7,7 +7,7 @@ workspace:
 
 tasks:
   build:
-    command: 'ng build chat-ui'
+    command: 'ng build @chatkitty/angular'
     inputs:
       - '@group(app)'
       - '@group(sources)'

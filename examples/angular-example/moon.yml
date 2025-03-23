@@ -14,8 +14,8 @@ fileGroups:
 
 tasks:
   build:
-    command: 'ng build app'
+    command: 'ng build angular-example'
     local: true
   dev:
-    command: 'ng serve app'
+    command: 'ng serve angular-example'
     local: true
