@@ -2,3 +2,4 @@ packages:
   - 'examples/*'
   - 'libraries/*'
   - 'tools/*'
+  - 'libraries/angular/dist/*'
