@@ -7,7 +7,7 @@ workspace:
 
 tasks:
   build:
-    command: 'ng build @chatkitty/angular'
+    command: 'cd workspace && ng build @chatkitty/angular'
     inputs:
       - '@group(app)'
       - '@group(sources)'
