@@ -9,16 +9,5 @@
     "tslib": "^2.3.0",
     "chatkitty": "workspace:*"
   },
-  "sideEffects": false,
-  "module": "../../dist/chat-ui/fesm2022/chatkitty-angular.mjs",
-  "typings": "../../dist/chat-ui/index.d.ts",
-  "exports": {
-    "./package.json": {
-      "default": "./../../package.json"
-    },
-    ".": {
-      "types": "./../../dist/chat-ui/index.d.ts",
-      "default": "./../../dist/chat-ui/fesm2022/chatkitty-angular.mjs"
-    }
-  }
+  "sideEffects": false
 }
