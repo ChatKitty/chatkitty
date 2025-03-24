@@ -1,0 +1,21 @@
+type: 'application'
+
+workspace:
+  inheritedTasks:
+    exclude: ['typecheck']
+
+toolchain:
+  typescript:
+    disabled: true
+
+fileGroups:
+  app:
+    - 'src/app/index.html'
+
+tasks:
+  build:
+    command: 'ng build angular-example'
+    local: true
+  dev:
+    command: 'ng serve angular-example'
+    local: true
