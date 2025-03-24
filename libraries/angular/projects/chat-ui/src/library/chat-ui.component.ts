@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import { connectApi, loadChatUi } from "chatkitty";
+import {connectApi, loadChatUi} from "chatkitty";
 
 @Component({
   selector: 'ChatUi',
@@ -12,43 +12,39 @@ import { connectApi, loadChatUi } from "chatkitty";
 })
 export class ChatUi {
 
-  @Input({ required: true }) apiKey: string = "";
+  @Input({required: true}) apiKey: string = "";
 
-  @Input({ required: true }) username: string = "";
+  @Input({required: true}) username: string = "";
 
-  @Input({ required: true }) widgetId: string = "";
+  @Input({required: true}) widgetId: string = "";
 
 
   async ngOnInit() {
 
-    const initializeChat = async () => {
-      const connection = await connectApi({
-        apiKey: this.apiKey,
-        username: this.username
-      });
+    const connection = await connectApi({
+      apiKey: this.apiKey,
+      username: this.username
+    });
 
-      loadChatUi(
-        {
-          widgetId: this.widgetId,
-          container: {height: "100%"},
-          audio: {enabled: true},
-          components: {
-            chat: (_context) => ({
-              menuActions: [],
-              onMounted: () => {
-              },
-            })
-          },
-          templates: {}
+    loadChatUi(
+      {
+        widgetId: this.widgetId,
+        container: {height: "100%"},
+        audio: {enabled: true},
+        components: {
+          chat: (_context) => ({
+            menuActions: [],
+            onMounted: () => {
+            },
+          })
         },
-        {
-          timeout: 50000,
-          connection
-        }
-      );
-    };
-
-    await initializeChat();
+        templates: {}
+      },
+      {
+        timeout: 50000,
+        connection
+      }
+    );
   }
 
 }
