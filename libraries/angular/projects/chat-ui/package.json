@@ -17,8 +17,8 @@
       "default": "./../../package.json"
     },
     ".": {
-      "types": "./../../index.d.ts",
-      "default": "./../../fesm2022/chatkitty-angular.mjs"
+      "types": "./../../dist/chat-ui/index.d.ts",
+      "default": "./../../dist/chat-ui/fesm2022/chatkitty-angular.mjs"
     }
   }
 }
