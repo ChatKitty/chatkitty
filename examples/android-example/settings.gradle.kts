@@ -14,8 +14,10 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "ChatUi"
+rootProject.name = "ChatUiExample"
+include(":chat-ui-example")
 include(":chat-ui")
-
-
 include(":flex-hybrid-app")
+project(":chat-ui").projectDir = file("../../libraries/android/chat-ui")
+project(":flex-hybrid-app").projectDir = file("../../libraries/android/flex-hybrid-app")
+
