@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ "$1" == "auto" ]; then
+    OUTPUT_DIR="./models"
+
+    if [ -d "$OUTPUT_DIR" ]; then
+        rm -rf "${OUTPUT_DIR:?}"/*
+    else
+        mkdir "$OUTPUT_DIR"
+    fi
+
+    swagger-codegen generate -i models.yaml -l swift5 -o "$OUTPUT_DIR" --type-mappings Any=AnyCodable -Dmodels
+else
+    echo "Invalid argument. Use 'auto' to generate models."
+fi

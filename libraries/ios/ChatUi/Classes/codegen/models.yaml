@@ -1,0 +1,98 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Messaging API",
+    "description": "API for messaging system",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.example.com",
+      "description": "Main API server"
+    }
+  ],
+  "paths": {},
+  "components": {
+    "schemas": {
+      "Channel": {
+        "type": "object",
+        "properties": {
+          "lastReceivedMessage": {
+            "$ref": "#/components/schemas/Message"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "properties": {
+            "type": "object"
+          },
+          "creator": {
+            "$ref": "#/components/schemas/Member"
+          },
+          "type": {
+            "type": "string"
+          },
+          "createdTime": {
+            "type": "string"
+          }
+        }
+      },
+      "Message": {
+        "type": "object",
+        "properties": {
+          "body": {
+            "type": "string"
+          },
+          "createdTime": {
+            "type": "string"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "presence": {
+            "$ref": "#/components/schemas/Presence"
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      },
+      "Presence": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "online": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Member": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "presence": {
+            "$ref": "#/components/schemas/Presence"
+          }
+        }
+      }
+    }
+  }
+}
