@@ -1,0 +1,38 @@
+PODS:
+  - Alamofire (5.10.2)
+  - ChatUi (1.0.0):
+    - Moya/RxSwift (~> 15.0)
+    - RxSwift (= 6.5.0)
+    - Starscream (~> 4.0.6)
+  - Moya/Core (15.0.0):
+    - Alamofire (~> 5.0)
+  - Moya/RxSwift (15.0.0):
+    - Moya/Core
+    - RxSwift (~> 6.0)
+  - RxSwift (6.5.0)
+  - Starscream (4.0.8)
+
+DEPENDENCIES:
+  - ChatUi (from `../../libraries/ios/`)
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - Moya
+    - RxSwift
+    - Starscream
+
+EXTERNAL SOURCES:
+  ChatUi:
+    :path: "../../libraries/ios/"
+
+SPEC CHECKSUMS:
+  Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
+  ChatUi: 862e21e498417cc50ccdd8c278acd764cf162612
+  Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
+  RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
+  Starscream: 19b5533ddb925208db698f0ac508a100b884a1b9
+
+PODFILE CHECKSUM: 5712beea78a7eec3b318d3124f23f07ac53f6b81
+
+COCOAPODS: 1.16.2
