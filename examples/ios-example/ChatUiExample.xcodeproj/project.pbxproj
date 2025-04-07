@@ -11,7 +11,7 @@
 		3921AAF32DA3A7A900B3A465 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3921AAEB2DA3A7A900B3A465 /* Images.xcassets */; };
 		3921AAF42DA3A7A900B3A465 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3921AAEA2DA3A7A900B3A465 /* AppDelegate.swift */; };
 		3921AAF52DA3A7A900B3A465 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3921AAEF2DA3A7A900B3A465 /* ViewController.swift */; };
-		39FDA8A42DA7AD4700EFF94A /* ChatUi in Frameworks */ = {isa = PBXBuildFile; productRef = 39FDA8A32DA7AD4700EFF94A /* ChatUi */; };
+		39FDA8A72DAB0F5800EFF94A /* ChatUi in Frameworks */ = {isa = PBXBuildFile; productRef = 39FDA8A62DAB0F5800EFF94A /* ChatUi */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 /* End PBXBuildFile section */
 
@@ -42,7 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				39FDA8A42DA7AD4700EFF94A /* ChatUi in Frameworks */,
+				39FDA8A72DAB0F5800EFF94A /* ChatUi in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -183,7 +183,7 @@
 			);
 			mainGroup = 607FACC71AFB9204008FA782;
 			packageReferences = (
-				39FDA8A02DA7ACA900EFF94A /* XCLocalSwiftPackageReference "../../libraries/ios" */,
+				39FDA8A82DACDA6200EFF94A /* XCLocalSwiftPackageReference "../../libraries/ios" */,
 			);
 			productRefGroup = 607FACD11AFB9204008FA782 /* Products */;
 			projectDirPath = "";
@@ -479,16 +479,15 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		39FDA8A02DA7ACA900EFF94A /* XCLocalSwiftPackageReference "../../libraries/ios" */ = {
+		39FDA8A82DACDA6200EFF94A /* XCLocalSwiftPackageReference "../../libraries/ios" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = ../../libraries/ios;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		39FDA8A32DA7AD4700EFF94A /* ChatUi */ = {
+		39FDA8A62DAB0F5800EFF94A /* ChatUi */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 39FDA8A02DA7ACA900EFF94A /* XCLocalSwiftPackageReference "../../libraries/ios" */;
 			productName = ChatUi;
 		};
 /* End XCSwiftPackageProductDependency section */
