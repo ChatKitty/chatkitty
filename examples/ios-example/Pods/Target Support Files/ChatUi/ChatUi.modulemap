@@ -1,6 +1,0 @@
-framework module ChatUi {
-  umbrella header "ChatUi-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -7,17 +7,24 @@
 		<key>ChatUiExample.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>11</integer>
+			<integer>1</integer>
 		</dict>
-		<key>ChatUiTests.xcscheme_^#shared#^_</key>
+		<key>ChatUiTests.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
-			<integer>9</integer>
+			<integer>0</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>607FACCF1AFB9204008FA782</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>607FACE41AFB9204008FA782</key>
 		<dict>
 			<key>primary</key>
 			<true/>
