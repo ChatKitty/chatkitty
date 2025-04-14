@@ -1,6 +1,6 @@
 package com.chatkitty.ui.library
 
-import app.dvkyun.flexhybridand.FlexWebView
+import app.dvkyun.flexhybridapp.FlexWebView
 import com.chatkitty.ui.api.StompXBridge
 import com.chatkitty.ui.stompx.model.FlexStompXEmptyMessage
 import com.chatkitty.ui.stompx.model.FlexStompXEventType

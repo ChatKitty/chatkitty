@@ -1,4 +1,4 @@
-package app.dvkyun.flexhybridand
+package app.dvkyun.flexhybridapp
 
 @Target(AnnotationTarget.FUNCTION)
 annotation class FlexFuncInterface

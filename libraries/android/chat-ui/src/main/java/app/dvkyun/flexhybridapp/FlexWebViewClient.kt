@@ -1,4 +1,4 @@
-package app.dvkyun.flexhybridand
+package app.dvkyun.flexhybridapp
 
 import android.graphics.Bitmap
 import android.net.Uri

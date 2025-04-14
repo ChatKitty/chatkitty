@@ -1,6 +1,6 @@
 package com.chatkitty.ui.library
 
-import app.dvkyun.flexhybridand.FlexWebView
+import app.dvkyun.flexhybridapp.FlexWebView
 import com.chatkitty.ui.api.ChatUIBridge
 import com.chatkitty.ui.models.ChatComponentContext
 import com.chatkitty.ui.models.ChatUIMessage

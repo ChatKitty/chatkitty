@@ -1,4 +1,4 @@
-package app.dvkyun.flexhybridand
+package app.dvkyun.flexhybridapp
 
 class FlexArguments internal constructor(private val array: Array<FlexData>) : FlexType {
 
