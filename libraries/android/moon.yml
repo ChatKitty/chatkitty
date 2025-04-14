@@ -1,0 +1,10 @@
+type: 'library'
+language: 'kotlin'
+
+workspace:
+  inheritedTasks:
+    exclude: ['build']
+
+tasks:
+  publish:
+    command: './gradlew publishToMavenCentral --no-configuration-cache'
