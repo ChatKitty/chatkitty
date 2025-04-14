@@ -1,0 +1,10 @@
+type: 'library'
+language: 'swift'
+
+workspace:
+  inheritedTasks:
+    exclude: ['build']
+
+tasks:
+  publish:
+    command: './publish.sh'
