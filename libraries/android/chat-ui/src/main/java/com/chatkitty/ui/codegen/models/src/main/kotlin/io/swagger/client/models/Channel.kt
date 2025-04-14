@@ -11,7 +11,7 @@
  */
 package io.swagger.client.models
 
-import app.dvkyun.flexhybridand.FlexType
+import app.dvkyun.flexhybridapp.FlexType
 import io.swagger.client.models.Member
 import io.swagger.client.models.Message
 

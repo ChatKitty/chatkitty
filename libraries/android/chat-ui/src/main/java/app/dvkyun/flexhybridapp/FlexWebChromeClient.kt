@@ -1,4 +1,4 @@
-package app.dvkyun.flexhybridand
+package app.dvkyun.flexhybridapp
 
 import android.R.color.black
 import android.annotation.SuppressLint

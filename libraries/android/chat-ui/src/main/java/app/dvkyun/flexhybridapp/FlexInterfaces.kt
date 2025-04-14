@@ -1,6 +1,6 @@
-package app.dvkyun.flexhybridand
+package app.dvkyun.flexhybridapp
 
-import app.dvkyun.flexhybridand.forjava.*
+import app.dvkyun.flexhybridapp.forjava.*
 import kotlinx.coroutines.CoroutineScope
 import kotlin.reflect.KClass
 

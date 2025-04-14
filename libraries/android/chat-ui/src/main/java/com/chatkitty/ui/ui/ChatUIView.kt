@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
-import app.dvkyun.flexhybridand.FlexWebView
+import app.dvkyun.flexhybridapp.FlexWebView
 import com.chatkitty.ui.R
 import com.chatkitty.ui.api.ChatUIBridge
 import com.chatkitty.ui.api.StompXBridge

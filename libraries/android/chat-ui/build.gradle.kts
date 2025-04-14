@@ -1,15 +1,46 @@
+import com.vanniktech.maven.publish.SonatypeHost
+
+group = "com.chatkitty.ui"
+version = "1.0.0"
+
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("com.vanniktech.maven.publish") version "0.30.0"
     `maven-publish`
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("mavenJava") {
-            groupId = "com.chatkitty.ui"
-            artifactId = "chatkitty-ui"
-            version = "1.0.0"
+mavenPublishing {
+
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+
+    signAllPublications()
+
+    coordinates(group.toString(), "chat-ui", version.toString())
+
+    pom {
+        name = "ChatUi"
+        description = "A mathematics calculation library."
+        inceptionYear = "2025"
+        url = "https://github.com/ChatKitty/chatkitty"
+        licenses {
+            license {
+                name = "MIT License"
+                url = "https://opensource.org/license/mit"
+                distribution = "https://opensource.org/license/mit"
+            }
+        }
+        developers {
+            developer {
+                id = "chatkitty"
+                name = "ChatKitty"
+                url = "https://github.com/ChatKitty"
+            }
+        }
+        scm {
+            url = "https://github.com/ChatKitty/chatkitty"
+            connection = "scm:git:git://github.com/ChatKitty/chatkitty.git"
+            developerConnection = "scm:git:ssh://git@github.com/ChatKitty/chatkitty.git"
         }
     }
 }
@@ -64,10 +95,16 @@ dependencies {
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.10.2")
     implementation("org.slf4j:slf4j-android:1.7.30")
 
+    // FlexHybridApp Dependencies
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("androidx.core:core-ktx:1.16.0")
+    implementation("androidx.webkit:webkit:1.13.0")
+
     implementation("androidx.compose.ui:ui")
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.12.0")
-    implementation(project(":flex-hybrid-app"))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")

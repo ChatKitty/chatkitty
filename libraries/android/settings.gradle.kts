@@ -16,6 +16,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "ChatUi"
 include(":chat-ui")
-
-
-include(":flex-hybrid-app")

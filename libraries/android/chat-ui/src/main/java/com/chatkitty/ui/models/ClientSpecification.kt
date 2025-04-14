@@ -1,6 +1,6 @@
 package com.chatkitty.ui.models
 
-import app.dvkyun.flexhybridand.FlexType
+import app.dvkyun.flexhybridapp.FlexType
 
 data class ClientSpecification(
     val version: String,

@@ -1,4 +1,4 @@
-package app.dvkyun.flexhybridand
+package app.dvkyun.flexhybridapp
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -9,7 +9,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.webkit.*
 import androidx.annotation.CallSuper
-import app.dvkyun.flexhybridand.forjava.*
+import app.dvkyun.flexhybridapp.forjava.*
 import kotlinx.coroutines.*
 import org.json.JSONArray
 import org.json.JSONException
@@ -170,7 +170,7 @@ open class FlexWebView : WebView {
 
     init {
         val atv = activity ?: throw FlexException(FlexException.ERROR1)
-        flexJsString = FlexUtil.fileToString(context.assets.open("FlexHybridAnd.js"))
+        flexJsString = FlexUtil.fileToString(context.assets.open("FlexHybridApp.js"))
         webChromeClient = FlexWebChromeClient(atv)
         webViewClient = FlexWebViewClient()
         super.addJavascriptInterface(InternalInterface(), UNIQUE)

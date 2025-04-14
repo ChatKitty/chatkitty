@@ -1,6 +1,6 @@
 package com.chatkitty.ui.stompx.model
 
-import app.dvkyun.flexhybridand.FlexType
+import app.dvkyun.flexhybridapp.FlexType
 import org.json.JSONObject
 
 data class FlexStompXMessage<T>(
