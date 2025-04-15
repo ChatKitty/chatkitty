@@ -14,4 +14,4 @@ tasks:
     outputs:
       - 'dist'
   publish:
-    command: 'pnpm publish --access public'
+    command: 'pnpm publish --access public --no-git-checks'
