@@ -13,3 +13,5 @@ tasks:
       - '@group(sources)'
     outputs:
       - 'dist'
+  publish:
+    command: 'npm publish --access public'

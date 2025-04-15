@@ -1,7 +1,8 @@
 {
   "name": "@chatkitty/react",
-  "private": true,
-  "version": "0.0.0",
+  "private": false,
+  "version": "1.0.0",
+  "description": "A powerful tool for integrating chat features into your React web applications.",
   "type": "module",
   "main": "dist/chatkitty-react.umd.js",
   "module": "dist/chatkitty-react.es.js",

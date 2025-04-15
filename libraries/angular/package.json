@@ -1,6 +1,7 @@
 {
   "name": "@chatkitty/angular",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "description": "A powerful tool for integrating chat features into your Angular web applications.",
   "scripts": {
     "start": "cd workspace && ng serve",
     "build": "cd workspace && ng build",
