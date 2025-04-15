@@ -14,4 +14,4 @@ tasks:
     outputs:
       - 'dist'
   publish:
-    command: 'npm publish --access public'
+    command: 'pnpm publish --access public'
