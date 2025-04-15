@@ -1,10 +1,11 @@
 {
   "name": "@chatkitty/vue",
-  "private": true,
-  "version": "1.0.0",
+  "private": false,
+  "version": "1.0.2",
+  "description": "A powerful tool for integrating chat features into your Vue3 web applications.",
   "type": "module",
-  "main": "./dist/chatkitty-vue.umd.js",
-  "module": "./dist/chatkitty-vue.es.js",
+  "main": "dist/chatkitty-vue.umd.js",
+  "module": "dist/chatkitty-vue.es.js",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

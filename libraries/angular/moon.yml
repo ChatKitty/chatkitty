@@ -13,3 +13,5 @@ tasks:
       - '@group(sources)'
     outputs:
       - 'dist'
+  publish:
+    command: 'pnpm publish --access public --no-git-checks'
