@@ -10,11 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import com.chatkitty.ui.ui.theme.ChatUiTheme
-import com.chatkitty.ui.models.ApiConnection
-import com.chatkitty.ui.models.ChatUIComponents
-import com.chatkitty.ui.models.ChatUIConfiguration
-import com.chatkitty.ui.models.Theme
-import com.chatkitty.ui.ui.ChatUIView
+import com.chatkitty.models.ApiConnection
+import com.chatkitty.models.ChatUIComponents
+import com.chatkitty.models.ChatUIConfiguration
+import com.chatkitty.models.Theme
+import com.chatkitty.ui.ChatUIView
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
