@@ -1,6 +1,6 @@
 import com.vanniktech.maven.publish.SonatypeHost
 
-group = "com.chatkitty.ui"
+group = "com.chatkitty"
 version = "1.0.0"
 
 plugins {
@@ -20,7 +20,7 @@ mavenPublishing {
 
     pom {
         name = "ChatUi"
-        description = "A mathematics calculation library."
+        description = "A powerful tool for integrating chat features into your applications."
         inceptionYear = "2025"
         url = "https://github.com/ChatKitty/chatkitty"
         licenses {
@@ -45,7 +45,7 @@ mavenPublishing {
     }
 }
 android {
-    namespace = "com.chatkitty.ui"
+    namespace = "com.chatkitty"
     compileSdk = 35
 
     kotlin {

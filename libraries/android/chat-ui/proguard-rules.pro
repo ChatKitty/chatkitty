@@ -4,7 +4,7 @@
     @androidx.compose.runtime.Composable <methods>;
 }
 
--keepclassmembers class com.chatkitty.ui.ui.ChatUIView {
+-keepclassmembers class com.chatkitty.ui.ChatUIView {
     public <init>(android.content.Context);
     public <init>(android.content.Context, android.util.AttributeSet);
 }
