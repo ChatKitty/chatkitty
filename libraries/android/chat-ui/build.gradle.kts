@@ -32,7 +32,7 @@ mavenPublishing {
         }
         developers {
             developer {
-                id = "chatkitty"
+                id = "@chatkitty/core"
                 name = "ChatKitty"
                 url = "https://github.com/ChatKitty"
             }

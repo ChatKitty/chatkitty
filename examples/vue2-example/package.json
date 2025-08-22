@@ -4,7 +4,7 @@
   "dependencies": {
     "core-js": "^3.8.3",
     "vue": "^2.6.14",
-    "chatkitty": "workspace:*"
+    "@chatkitty/core": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

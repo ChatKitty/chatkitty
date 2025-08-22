@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { connectApi, loadChatUi } from "chatkitty";
+import { connectApi, loadChatUi } from "@chatkitty/core";
 
 export const ChatUi = ({apiKey, username, widgetId}: {apiKey: string, username: string, widgetId: string}) => {
     useEffect(() => {

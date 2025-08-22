@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "tslib": "^2.3.0",
-    "chatkitty": "workspace:*"
+    "@chatkitty/core": "workspace:*"
   },
   "sideEffects": false,
   "module": "./dist/fesm2022/chatkitty-angular.mjs",

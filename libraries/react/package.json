@@ -21,7 +21,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "chatkitty": "workspace:*",
+    "@chatkitty/core": "workspace:*",
     "react": "^19.0.0"
   },
   "peerDependencies": {

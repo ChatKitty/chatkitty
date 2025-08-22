@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {connectApi, loadChatUi} from "chatkitty";
+import {connectApi, loadChatUi} from "@chatkitty/core";
 
 @Component({
   selector: 'ChatUi',

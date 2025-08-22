@@ -1,8 +1,8 @@
-import {connectApi, loadChatUi} from "chatkitty";
+import {connectApi, loadChatUi} from "@chatkitty/core";
 
 <script setup lang="ts">
 
-import {connectApi, loadChatUi} from "chatkitty";
+import {connectApi, loadChatUi} from "@chatkitty/core";
 
 const {apiKey, username, widgetId} = defineProps<{ apiKey: string, username: string, widgetId: string }>()
 
