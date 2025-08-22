@@ -1,9 +1,9 @@
-import ChatKitty from '../../../../libraries/legacy';
+import { ChatService } from '@chatkitty/core';
 
-import type { CurrentUser, Channel, Message, User } from '../../../../libraries/legacy';
+import type { CurrentUser, Channel, Message, User } from '@chatkitty/core';
 import { parseTimestamp } from '@/utils/dates';
 
-export const chatkitty = ChatKitty.getInstance('afaac908-1db3-4b5c-a7ae-c040b9684403');
+export const chatkitty = ChatService.getInstance('afaac908-1db3-4b5c-a7ae-c040b9684403');
 
 export const enterRoom = async ({
 	room,

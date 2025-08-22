@@ -1,7 +1,0 @@
-type: 'library'
-language: 'typescript'
-
-tasks:
-  build:
-    outputs:
-      - 'esm'
