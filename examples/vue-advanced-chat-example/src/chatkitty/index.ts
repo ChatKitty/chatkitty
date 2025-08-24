@@ -71,7 +71,7 @@ export const fetchMessages = async (room: any) => {
 };
 
 export const fetchRooms = async () => {
-	const user = chatkitty.currentUser;
+	const user = await getCurrentUser();
 
 	if (!user) {
 		return [];
@@ -101,6 +101,16 @@ export const sendMessage = async ({ room, content }: any) => {
 		await chatkitty.sendMessage({ channel: room._channel, body: content });
 	}
 };
+
+const getCurrentUser = async () => {
+    const result = await chatkitty.retrieveCurrentUser();
+
+    if (result.succeeded) {
+        return result.user
+    }
+
+    return null
+}
 
 const mapChannel = async (user: CurrentUser, channel: Channel) => ({
 	roomId: channel.id,

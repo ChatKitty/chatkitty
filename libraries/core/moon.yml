@@ -6,12 +6,5 @@ workspace:
     exclude: ['build']
 
 tasks:
-  build:
-    command: 'pnpm build'
-    inputs:
-      - '@group(app)'
-      - '@group(sources)'
-    outputs:
-      - 'dist'
   publish:
     command: 'pnpm publish --access public --no-git-checks'
