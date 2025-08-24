@@ -1,0 +1,14 @@
+type: 'application'
+
+workspace:
+  inheritedTasks:
+    exclude: ['typecheck']
+
+toolchain:
+  typescript:
+    disabled: true
+
+tasks:
+  serve:
+    command: 'http-server'
+    local: true

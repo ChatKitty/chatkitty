@@ -1,0 +1,7 @@
+{
+  "name": "chatkitty-chat-ui-html-example",
+  "private": true,
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

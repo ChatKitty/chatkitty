@@ -44,7 +44,7 @@ const connection = await connectApi({
 
 console.log('Connected to ChatKitty as', connection.user.value.username);
 
-// get underling SDK client
+// optional: get SDK client
 const client = connection.getSdkClient();
 ```
 
