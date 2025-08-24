@@ -1,6 +1,6 @@
 {
   "name": "@chatkitty/core",
-  "version": "2.95.2",
+  "version": "2.97.1",
   "description": "A powerful tool for integrating chat features into your web applications.",
   "license": "MIT",
   "files": [
@@ -26,7 +26,7 @@
   "dependencies": {
     "@stomp/rx-stomp": "^2.0.0",
     "@stomp/stompjs": "^7.0.0",
-    "axios": "^1.5.1",
+    "axios": "^1.11.0",
     "lit-html": "^2.7.0",
     "rxjs": "^7.2.0",
     "uuid": "^9.0.0"

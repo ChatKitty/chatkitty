@@ -1,9 +1,9 @@
-import { ChatService } from '@chatkitty/core';
+import { getSdkClient } from '@chatkitty/core';
 
-import type { CurrentUser, Channel, Message, User } from '@chatkitty/core';
+import type { SdkClient, CurrentUser, Channel, Message, User } from '@chatkitty/core';
 import { parseTimestamp } from '@/utils/dates';
 
-export const chatkitty = ChatService.getInstance('afaac908-1db3-4b5c-a7ae-c040b9684403');
+export const chatkitty: SdkClient = getSdkClient('afaac908-1db3-4b5c-a7ae-c040b9684403');
 
 export const enterRoom = async ({
 	room,
