@@ -10,9 +10,9 @@ git add Package.swift
 git add README.md
 git branch -M local
 TIMESTAMP="$(date '+%Y-%m-%d %T')"
-TAG="patch(chat-ui-ios):"
+TAG="patch(ios):"
 git commit -m "$TAG git init $TIMESTAMP"
-git remote add origin git@github.com:ChatKitty/chat-ui-ios.git
+git remote add origin git@github.com:ChatKitty/chatkitty-ios.git
 git fetch
 git checkout main
 git merge local --allow-unrelated-histories --strategy-option theirs -m "$TAG release $TIMESTAMP"

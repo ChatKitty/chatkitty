@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "ChatUi"
-include(":chat-ui")
+rootProject.name = "ChatKitty"
+include(":chatkitty")

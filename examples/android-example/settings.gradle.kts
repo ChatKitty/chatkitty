@@ -14,7 +14,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "ChatUiExample"
-include(":chat-ui-example")
-include(":chat-ui")
-project(":chat-ui").projectDir = file("../../libraries/android/chat-ui")
+rootProject.name = "ChatKittyExample"
+include(":example")
+include(":chatkitty")
+project(":chatkitty").projectDir = file("../../libraries/android/chatkitty")

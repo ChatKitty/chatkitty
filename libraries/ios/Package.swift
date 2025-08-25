@@ -2,12 +2,12 @@
 import PackageDescription
 
 let package = Package(
-    name: "com.chatkitty.ui",
+    name: "com.chatkitty",
     platforms: [
         .iOS(.v14)
     ],
     products: [
-        .library(name: "ChatUi", targets: ["ChatUi"]),
+        .library(name: "ChatKitty", targets: ["ChatKitty"]),
     ],
     dependencies: [
         .package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "15.0.0")),
@@ -16,13 +16,13 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "ChatUi",
+            name: "ChatKitty",
             dependencies: ["Moya", "Starscream", "RxSwift"],
             resources: [
                 .process("WebBridge/js/FlexHybridiOS.js")],
             ),
         .testTarget(
-            name: "ChatUiTests",
-            dependencies: ["ChatUi"]),
+            name: "ChatKittyTests",
+            dependencies: ["ChatKitty"]),
     ]
 )

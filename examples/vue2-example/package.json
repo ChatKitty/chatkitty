@@ -1,5 +1,5 @@
 {
-  "name": "chatkitty-chat-ui-vue-2-example",
+  "name": "vue2-example",
   "private": true,
   "dependencies": {
     "core-js": "^3.8.3",

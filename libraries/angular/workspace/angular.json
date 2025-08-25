@@ -5,21 +5,21 @@
   "projects": {
     "@chatkitty/angular": {
       "projectType": "library",
-      "root": "projects/chat-ui",
-      "sourceRoot": "projects/chat-ui/src",
+      "root": "projects/chatkitty",
+      "sourceRoot": "projects/chatkitty/src",
       "prefix": "library",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/chat-ui/ng-package.json"
+            "project": "projects/chatkitty/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/chat-ui/tsconfig.lib.prod.json"
+              "tsConfig": "projects/chatkitty/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/chat-ui/tsconfig.lib.json"
+              "tsConfig": "projects/chatkitty/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -27,7 +27,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "tsConfig": "projects/chat-ui/tsconfig.spec.json",
+            "tsConfig": "projects/chatkitty/tsconfig.spec.json",
             "polyfills": [
               "zone.js",
               "zone.js/testing"
