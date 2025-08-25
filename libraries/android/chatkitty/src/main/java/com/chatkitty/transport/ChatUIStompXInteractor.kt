@@ -1,4 +1,4 @@
-package com.chatkitty.library
+package com.chatkitty.transport
 
 import com.chatkitty.api.StompXBridge
 import com.chatkitty.models.ChatUIMessage

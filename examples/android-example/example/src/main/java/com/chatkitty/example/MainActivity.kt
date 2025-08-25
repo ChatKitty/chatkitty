@@ -14,6 +14,7 @@ import com.chatkitty.models.ApiConnection
 import com.chatkitty.models.ChatUIComponents
 import com.chatkitty.models.ChatUIConfiguration
 import com.chatkitty.models.Theme
+import com.chatkitty.ui.ChatUIView
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

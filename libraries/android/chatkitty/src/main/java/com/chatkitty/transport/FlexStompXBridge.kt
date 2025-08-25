@@ -1,4 +1,4 @@
-package com.chatkitty.library
+package com.chatkitty.transport
 
 import app.dvkyun.flexhybridapp.FlexWebView
 import com.chatkitty.api.StompXBridge

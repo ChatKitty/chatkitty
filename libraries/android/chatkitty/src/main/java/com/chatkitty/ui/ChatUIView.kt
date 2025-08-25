@@ -1,4 +1,4 @@
-package com.chatkitty.example
+package com.chatkitty.ui
 
 import android.content.Context
 import android.util.AttributeSet
@@ -8,9 +8,9 @@ import app.dvkyun.flexhybridapp.FlexWebView
 import com.chatkitty.R
 import com.chatkitty.api.ChatUIBridge
 import com.chatkitty.api.StompXBridge
-import com.chatkitty.library.ChatUIStompXInteractor
-import com.chatkitty.library.FlexChatUIBridge
-import com.chatkitty.library.FlexStompXBridge
+import com.chatkitty.transport.ChatUIStompXInteractor
+import com.chatkitty.transport.FlexChatUIBridge
+import com.chatkitty.transport.FlexStompXBridge
 import com.chatkitty.models.ChatUIComponents
 import com.chatkitty.models.ChatUIConfiguration
 import com.chatkitty.models.ClientSpecification
