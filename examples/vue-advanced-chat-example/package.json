@@ -3,8 +3,8 @@
   "private": true,
   "dependencies": {
     "@chatkitty/core": "workspace:*",
-    "vue": "^3.4.27",
-    "vue-advanced-chat": "^2.1.0"
+    "vue-advanced-chat": "^2.1.0",
+    "vue": "^3.4.27"
   },
   "devDependencies": {
     "@types/jsdom": "^21.1.6",

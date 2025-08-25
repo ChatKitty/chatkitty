@@ -1,7 +1,6 @@
 {
   "name": "react-example",
   "private": true,
-  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@chatkitty/react": "1.0.2",
+    "@chatkitty/react": "workspace:*",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

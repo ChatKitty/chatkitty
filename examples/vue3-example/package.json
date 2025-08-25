@@ -1,7 +1,6 @@
 {
   "name": "vue-example",
   "private": true,
-  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
@@ -9,7 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@chatkitty/vue": "1.0.2",
+    "@chatkitty/vue": "workspace:*",
     "vue": "^3.5.13"
   },
   "devDependencies": {

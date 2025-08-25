@@ -16,6 +16,6 @@ tasks:
   build:
     command: 'ng build angular-example'
     local: true
-  dev:
+  serve:
     command: 'ng serve angular-example'
     local: true

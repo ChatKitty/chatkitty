@@ -78,8 +78,8 @@ importers:
         specifier: ^19.2.0
         version: 19.2.6(@angular/common@19.2.6(@angular/core@19.2.6(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@19.2.6(rxjs@7.8.2)(zone.js@0.15.0))(@angular/platform-browser@19.2.6(@angular/common@19.2.6(@angular/core@19.2.6(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@19.2.6(rxjs@7.8.2)(zone.js@0.15.0)))(rxjs@7.8.2)
       '@chatkitty/angular':
-        specifier: 1.0.0
-        version: 1.0.0(@angular/common@19.2.6(@angular/core@19.2.6(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@19.2.6(rxjs@7.8.2)(zone.js@0.15.0))
+        specifier: workspace:*
+        version: link:../../libraries/angular
       rxjs:
         specifier: ~7.8.0
         version: 7.8.2
@@ -133,8 +133,8 @@ importers:
   examples/react-example:
     dependencies:
       '@chatkitty/react':
-        specifier: 1.0.2
-        version: 1.0.2(react@19.0.0)
+        specifier: workspace:*
+        version: link:../../libraries/react
       react:
         specifier: ^19.0.0
         version: 19.0.0
@@ -268,8 +268,8 @@ importers:
   examples/vue3-example:
     dependencies:
       '@chatkitty/vue':
-        specifier: 1.0.2
-        version: 1.0.2(typescript@5.7.3)
+        specifier: workspace:*
+        version: link:../../libraries/vue
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.7.3)
@@ -301,6 +301,21 @@ importers:
       '@chatkitty/core':
         specifier: workspace:*
         version: link:../core
+      tslib:
+        specifier: ^2.3.0
+        version: 2.8.1
+
+  libraries/angular/dist:
+    dependencies:
+      '@angular/common':
+        specifier: ^19.2.0
+        version: 19.2.6(@angular/core@19.2.6(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2)
+      '@angular/core':
+        specifier: ^19.2.0
+        version: 19.2.6(rxjs@7.8.2)(zone.js@0.15.0)
+      '@chatkitty/core':
+        specifier: workspace:*
+        version: link:../../core
       tslib:
         specifier: ^2.3.0
         version: 2.8.1
@@ -1451,20 +1466,6 @@ packages:
   '@boost/translate@5.0.0':
     resolution: {integrity: sha512-asZzllaUBojMNoLv20TRji7xo8Sar3nSDbLqy6uXyd6Bbp94CI9OPbiNpPHFj/lNzYV456Dht9uXK5QySICWyA==}
     engines: {node: '>=18.12.0'}
-
-  '@chatkitty/angular@1.0.0':
-    resolution: {integrity: sha512-a12J1xp+524pGsSGqVgYowbW6XkNn0OS1P1dC4Zl+rKwKGfId8GLeZdOaUAdyhcgLBbkb2IRMygAt2STIbADIw==}
-    peerDependencies:
-      '@angular/common': ^19.2.0
-      '@angular/core': ^19.2.0
-
-  '@chatkitty/react@1.0.2':
-    resolution: {integrity: sha512-RKZDNfkA/9EF9ZlRmCuv6MfcaTqKAGmkzmhsmZU/gcr6lktlor1igUAZteoJPAV4Co9rAeIPtP/wGkUZt//BXw==}
-    peerDependencies:
-      react: ^19.0.0
-
-  '@chatkitty/vue@1.0.2':
-    resolution: {integrity: sha512-3LC129FdG5Um5sf6RO6hNiztxkip099PoENVDaxBkBEOS7WEFs1sH7EYNnOP80qIFU3059jgWTLnOa0PqlqOLw==}
 
   '@colors/colors@1.5.0':
     resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
@@ -4060,9 +4061,6 @@ packages:
 
   chardet@2.1.0:
     resolution: {integrity: sha512-bNFETTG/pM5ryzQ9Ad0lJOTa6HWD/YsScAR3EnCPZRPlQh77JocYktSHOUHelyhm8IARL+o4c4F1bP5KVOjiRA==}
-
-  chatkitty@2.86.9:
-    resolution: {integrity: sha512-KHYvlfkh89cJVKMlFmBAcD+obcqmStrEcXUZvLk9LRLII6AvH0QWgUPCMeHPMmyvDx/ClCbUyQcYDxVZYO1crg==}
 
   check-error@1.0.3:
     resolution: {integrity: sha512-iKEoDYaRmd1mxM90a2OEfWhjsjPpYPuQ+lMYsoxB126+t8fw7ySEO48nmDg5COTjxDI65/Y2OWpeEHk3ZOe8zg==}
@@ -11469,30 +11467,6 @@ snapshots:
       - supports-color
       - typescript
 
-  '@chatkitty/angular@1.0.0(@angular/common@19.2.6(@angular/core@19.2.6(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@19.2.6(rxjs@7.8.2)(zone.js@0.15.0))':
-    dependencies:
-      '@angular/common': 19.2.6(@angular/core@19.2.6(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2)
-      '@angular/core': 19.2.6(rxjs@7.8.2)(zone.js@0.15.0)
-      chatkitty: 2.86.9
-      tslib: 2.8.1
-    transitivePeerDependencies:
-      - debug
-
-  '@chatkitty/react@1.0.2(react@19.0.0)':
-    dependencies:
-      chatkitty: 2.86.9
-      react: 19.0.0
-    transitivePeerDependencies:
-      - debug
-
-  '@chatkitty/vue@1.0.2(typescript@5.7.3)':
-    dependencies:
-      chatkitty: 2.86.9
-      vue: 3.5.13(typescript@5.7.3)
-    transitivePeerDependencies:
-      - debug
-      - typescript
-
   '@colors/colors@1.5.0': {}
 
   '@conventional-changelog/git-client@1.0.1(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.2.0)':
@@ -14363,17 +14337,6 @@ snapshots:
   character-entities@2.0.2: {}
 
   chardet@2.1.0: {}
-
-  chatkitty@2.86.9:
-    dependencies:
-      '@stomp/rx-stomp': 2.0.0(@stomp/stompjs@7.0.0)(rxjs@7.8.2)(uuid@9.0.1)
-      '@stomp/stompjs': 7.0.0
-      axios: 1.11.0
-      lit-html: 2.8.0
-      rxjs: 7.8.2
-      uuid: 9.0.1
-    transitivePeerDependencies:
-      - debug
 
   check-error@1.0.3:
     dependencies:
