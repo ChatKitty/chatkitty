@@ -13,6 +13,6 @@ fileGroups:
     - 'public/index.html'
 
 tasks:
-  dev:
+  serve:
     command: 'vite --host'
     local: true

@@ -13,10 +13,6 @@ fileGroups:
     - 'public/index.html'
 
 tasks:
-  dev:
-    command: 'pnpm run dev'
+  serve:
+    command: 'vite --host'
     local: true
-  build:
-    command: 'pnpm run build'
-  install:
-    command: 'pnpm install'

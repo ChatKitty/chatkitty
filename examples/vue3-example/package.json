@@ -2,11 +2,6 @@
   "name": "vue-example",
   "private": true,
   "type": "module",
-  "scripts": {
-    "dev": "vite --host",
-    "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
-  },
   "dependencies": {
     "@chatkitty/vue": "workspace:*",
     "vue": "^3.5.13"

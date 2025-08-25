@@ -14,6 +14,6 @@ fileGroups:
     - 'vue.config.*'
 
 tasks:
-  dev:
+  serve:
     command: 'vue-cli-service serve'
     local: true

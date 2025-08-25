@@ -15,22 +15,8 @@ fileGroups:
     - 'vite.config.*'
 
 tasks:
-  dev:
+  serve:
     command: 'vite dev'
-    local: true
-
-  build:
-    command: 'vite build'
-    inputs:
-      - '@group(app)'
-      - '@group(sources)'
-    outputs:
-      - 'dist'
-
-  preview:
-    command: 'vite preview --port 4173'
-    deps:
-      - 'build'
     local: true
 
   typecheck:
