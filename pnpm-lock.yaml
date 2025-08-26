@@ -14,6 +14,9 @@ importers:
       '@b12k/mvm':
         specifier: ^0.0.11
         version: 0.0.11
+      '@chatkitty/cli':
+        specifier: workspace:*
+        version: link:tools/cli
       '@moonrepo/cli':
         specifier: ^1.39.4
         version: 1.39.4
@@ -472,6 +475,8 @@ importers:
       vue-tsc:
         specifier: ^2.2.8
         version: 2.2.8(typescript@5.7.3)
+
+  tools/cli: {}
 
   tools/release-config: {}
 

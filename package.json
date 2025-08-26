@@ -5,7 +5,7 @@
   "author": "ChatKitty",
   "infra": "monorepo",
   "scripts": {
-    "moon": "moon --color --log debug",
+    "chatkitty": "moon --color --log debug",
     "update": "npm-check-updates -u && pnpm install"
   },
   "pnpm": {
@@ -19,6 +19,7 @@
   "packageManager": "pnpm@9.0.2",
   "devDependencies": {
     "@b12k/mvm": "^0.0.11",
+    "@chatkitty/cli": "workspace:*",
     "@moonrepo/cli": "^1.39.4",
     "@release-it/conventional-changelog": "^10.0.1",
     "@swc/core": "^1.13.5",

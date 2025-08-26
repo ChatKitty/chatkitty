@@ -1,0 +1,6 @@
+type: 'library'
+language: 'javascript'
+
+workspace:
+  inheritedTasks:
+    exclude: ['build']
