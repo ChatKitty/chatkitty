@@ -86,7 +86,3 @@ await loadChatUi({
 ```
 
 Check out the [ChatKitty UI documentation](https://chatkitty.com/docs/ui) for a full list of customization options.
-
-## Advanced Features
-
-ChatKitty offers advanced features like audio notifications, localization for different languages, custom chat components, and error templates for a tailored chat experience. For more detailed documentation on these features and the complete API, visit the official [ChatKitty documentation](https://chatkitty.com/docs).

@@ -5,7 +5,6 @@
   "author": "ChatKitty",
   "infra": "monorepo",
   "scripts": {
-    "chatkitty": "moon --color --log debug",
     "update": "npm-check-updates -u && pnpm install"
   },
   "pnpm": {

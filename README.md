@@ -1,6 +1,8 @@
 # ChatKitty UI, Core SDKs, and examples
 
-ChatKitty is a powerful tool for integrating chat features into your web applications. It offers a comprehensive set of functionalities that enable developers to create a rich chat experience with minimal effort. Whether you're building a messaging app, adding chat to a social network, or integrating customer support chat into your application, ChatKitty provides all the necessary components to get started quickly and efficiently.
+ChatKitty is a powerful tool for integrating chat features into your web applications. It offers a comprehensive set of functionalities that enable developers to create a rich chat experience with minimal effort. Whether you're powering buyer–seller conversations in a marketplace, secure patient–provider messaging in telehealth, real-time team chat in a SaaS product, in-game party/guild chat, live stream Q&A with moderation, classroom discussions in edtech, or courier–customer updates in logistics, ChatKitty provides all the necessary components to get started quickly.
+
+Plug it in, customize the UI to match your brand, and ship a polished chat experience in minutes.
 
 ## Features
 
@@ -12,77 +14,14 @@ ChatKitty is a powerful tool for integrating chat features into your web applica
 - User authentication and authorization
 - Comprehensive API for advanced customization and integration
 
-## Prerequisites
+## Getting Started
 
-- Node.js (version 12.x or higher)
-- NPM (version 6.x or higher)
-
-## Installation
-
-To start using ChatKitty in your project, you can install it via npm with the following command:
-
-```bash
-npm install @chatkitty/core --save
-```
-
-## Basic Usage
-
-### Connecting to ChatKitty
-
-First, you need to establish a connection with the ChatKitty API using your API key and the username of the user who is connecting:
-
-```javascript
-import { connectApi } from '@chatkitty/core';
-
-const apiKey = 'YOUR_CHATKITTY_API_KEY';
-const username = 'USER_USERNAME';
-
-const connection = await connectApi({
-  apiKey: apiKey,
-  username: username,
-});
-
-console.log('Connected to ChatKitty as', connection.user.value.username);
-
-// optional: get SDK client
-const client = connection.getSdkClient();
-```
-
-### Displaying the Chat Interface
-
-You can easily load and display the ChatKitty UI in your application by specifying a widget ID and the container where the chat UI should be rendered:
-
-```javascript
-import { loadChatUi } from '@chatkitty/core';
-
-const chatUi = await loadChatUi({
-  widgetId: 'YOUR_WIDGET_ID',
-  username: 'USER_USERNAME',
-  container: {
-    id: 'chat-ui',
-    height: '100%',
-  },
-});
-
-// Optional: To unmount the chat UI
-// await chatUi.unmount();
-```
-
-### Customizing the Chat Experience
-
-ChatKitty allows for extensive customization of the chat UI and behavior through themes, localization, audio notifications, and much more. For example, to customize the theme and provide a custom user profile:
-
-```javascript
-await loadChatUi({
-  widgetId: 'YOUR_WIDGET_ID',
-  theme: 'dark',
-  profile: {
-    displayName: 'John Doe',
-    displayPicture: 'https://example.com/user-avatar.jpg',
-  },
-  // Other options...
-});
-```
+- ### [JavaScript/TypeScript](./libraries/core)
+- ### [React](./libraries/react)
+- ### [Vue 3](./libraries/vue)
+- ### [Angular](./libraries/angular)
+- ### [iOS (Swift)](./libraries/ios)
+- ### [Android (Kotlin)](./libraries/android)
 
 ## Advanced Features
 
