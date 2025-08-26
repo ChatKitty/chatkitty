@@ -1,51 +1,27 @@
-import { useEffect } from "react";
-import { connectApi, loadChatUi } from "@chatkitty/core";
+import { useEffect } from 'react';
+import { loadChatUi, ApiConnection } from '@chatkitty/core';
 
-export const ChatUi = ({apiKey, username, widgetId}: {apiKey: string, username: string, widgetId: string}) => {
-    useEffect(() => {
-        const initializeChat = async () => {
-            const connection = await connectApi({
-                apiKey: apiKey,
-                username: username
-            });
+export type ChatUiProps = {
+	widgetId: string;
+	username?: string;
+	connection?: ApiConnection;
+};
 
-            const { user, unreadChannelsCount, notifications, updateUser } = connection;
-            console.log("Connected as user:", user.value);
+export const ChatUi = ({ widgetId, username, connection }: ChatUiProps) => {
+	useEffect(() => {
+		if (!username && !connection) return;
 
-            user.watch((user) => console.log("User:", user));
-            unreadChannelsCount.watch((count) => console.log("Unread channels count:", count));
-            notifications.watch((notification) => console.log("Received notification:", notification));
+		loadChatUi(
+			{
+				widgetId,
+				username,
+				container: { height: '100%' },
+			},
+			{
+				connection,
+			},
+		);
+	}, [widgetId, username, connection]);
 
-            loadChatUi(
-                {
-                    widgetId: widgetId,
-                    container: { height: "100%" },
-                    audio: { enabled: true },
-                    components: {
-                        chat: (context) => ({
-                            menuActions: [],
-                            onMounted: () => {
-                                console.log("Chat UI mounted with context:", context);
-                                updateUser({ properties: { lastUpdated: new Date().toISOString() } });
-                            },
-                            onHeaderSelected: (channel) => console.log(channel),
-                            onMenuActionSelected: (action) => console.log(action)
-                        })
-                    },
-                    templates: {
-                    }
-                },
-                {
-                    timeout: 50000,
-                    connection
-                }
-            );
-        };
-
-        initializeChat();
-    }, []);
-
-    return (
-        <div id="chat-ui"></div>
-    );
+	return <div id="chat-ui"></div>;
 };
