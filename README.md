@@ -23,6 +23,18 @@ Plug it in, customize the UI to match your brand, and ship a polished chat exper
 - ### [iOS (Swift)](./libraries/ios)
 - ### [Android (Kotlin)](./libraries/android)
 
+To run the examples, clone the repository and run the setup commands in the root directory:
+
+```bash
+git clone https://github.com/ChatKitty/chatkitty.git
+
+cd chatkitty
+
+./setup.sh
+```
+
+Then follow the instructions in the respective [library](./libraries) folder.
+
 ## Advanced Features
 
 ChatKitty offers advanced features like audio notifications, localization for different languages, custom chat components, and error templates for a tailored chat experience. For more detailed documentation on these features and the complete API, visit the official [ChatKitty documentation](https://chatkitty.com/docs).
