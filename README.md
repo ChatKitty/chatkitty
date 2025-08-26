@@ -23,7 +23,7 @@ Plug it in, customize the UI to match your brand, and ship a polished chat exper
 - ### [iOS (Swift)](./libraries/ios)
 - ### [Android (Kotlin)](./libraries/android)
 
-To run the examples, clone the repository and run the setup commands in the root directory:
+To run the examples, clone the repository and run the setup command in the root directory:
 
 ```bash
 git clone https://github.com/ChatKitty/chatkitty.git

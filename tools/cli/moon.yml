@@ -4,3 +4,7 @@ language: 'javascript'
 workspace:
   inheritedTasks:
     exclude: ['build']
+
+tasks:
+  publish:
+    command: 'pnpm publish --access public --no-git-checks'
