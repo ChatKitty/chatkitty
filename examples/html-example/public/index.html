@@ -2,13 +2,13 @@
 <body>
 <script src='https://cdn.chatkitty.com/lib.js'></script>
 <div id='chat-ui'></div>
-<script>
-    const { loadChatUi } = ChatKitty
+<script type="module">
+    const {loadChatUi} = ChatKitty
 
-    loadChatUi({
-        widgetId: 'UWiEkKvdAaUJ1xut',
-        username: '2989c53a-d0c5-4222-af8d-fbf7b0c74ec6'
-    })
+    const widgetId = 'UWiEkKvdAaUJ1xut';
+    const username = '2989c53a-d0c5-4222-af8d-fbf7b0c74ec6';
+
+    loadChatUi({widgetId, username})
 </script>
 </body>
 </html>
