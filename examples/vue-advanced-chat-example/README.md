@@ -1,4 +1,5 @@
-# Vue-advanced-chat example
+# Vue Advanced Chat Example
 
-A Vue application using Vite, powered by
-[vue-advanced-chat](https://github.com/advanced-chat/vue-advanced-chat).
+```bash
+npx chatkitty vue-advanced-chat-example:serve
+```
