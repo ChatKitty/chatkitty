@@ -1,3 +1,3 @@
-import ChatUi from "./components/ChatUi.vue";
-
-export { ChatUi };
+export * from './definitions';
+export * from './components';
+export * from './api';

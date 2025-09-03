@@ -1,49 +1,37 @@
-import {connectApi, loadChatUi} from "@chatkitty/core";
-
 <script setup lang="ts">
+import { onMounted, watch } from 'vue';
+import { loadChatUi, type ApiConnection } from '@chatkitty/core';
 
-import {connectApi, loadChatUi} from "@chatkitty/core";
+export interface ChatUiProps {
+	widgetId: string;
+	username?: string;
+	connection?: ApiConnection;
+}
 
-const {apiKey, username, widgetId} = defineProps<{ apiKey: string, username: string, widgetId: string }>()
+const props = defineProps<ChatUiProps>();
 
-const initializeChat = async () => {
-  const connection = await connectApi({
-    apiKey: apiKey,
-    username: username
-  });
+onMounted(() => {
+	watch(
+		() => [props.widgetId, props.username, props.connection] as const,
+		([widgetId, username, connection]) => {
+			if (!username && !connection) return;
 
-  loadChatUi(
-      {
-        widgetId: widgetId,
-        container: {height: "100%"},
-        audio: {enabled: true},
-        components: {
-          chat: (_context) => ({
-            menuActions: [],
-            onMounted: () => {
-            },
-          })
-        },
-        templates: {}
-      },
-      {
-        timeout: 50000,
-        connection
-      }
-  );
-};
-
-initializeChat();
-
-
+			loadChatUi(
+				{
+					widgetId,
+					username,
+					container: { height: '100%' },
+				},
+				{
+					connection,
+				}
+			);
+		},
+		{ immediate: true }
+	);
+});
 </script>
 
 <template>
-  <div id="chat-ui"></div>
+	<div id="chat-ui"></div>
 </template>
-
-<style scoped>
-.read-the-docs {
-  color: #888;
-}
-</style>

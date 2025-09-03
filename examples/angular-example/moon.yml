@@ -13,9 +13,6 @@ fileGroups:
     - 'src/app/index.html'
 
 tasks:
-  build:
-    command: 'ng build angular-example'
-    local: true
   serve:
     command: 'ng serve angular-example'
     local: true
