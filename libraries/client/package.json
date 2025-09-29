@@ -1,7 +1,7 @@
 {
   "name": "@chatkitty/client",
   "version": "2.105.8",
-  "description": "Headless ChatKitty client library for connecting to the ChatKitty service.",
+  "description": "Headless client library for connecting to the ChatKitty service. Consider using @chatkitty/core for UI functionality.",
   "license": "MIT",
   "files": [
     "dist"
