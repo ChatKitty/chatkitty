@@ -2,9 +2,10 @@
   "name": "@chatkitty/vue-advanced-chat-example",
   "private": true,
   "dependencies": {
+    "@chatkitty/client": "workspace:*",
     "@chatkitty/core": "workspace:*",
-    "vue-advanced-chat": "^2.1.0",
-    "vue": "^3.4.27"
+    "vue": "^3.4.27",
+    "vue-advanced-chat": "^2.1.0"
   },
   "devDependencies": {
     "@types/jsdom": "^21.1.6",

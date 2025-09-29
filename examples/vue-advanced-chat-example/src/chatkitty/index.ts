@@ -1,6 +1,6 @@
-import { getSdkClient } from '@chatkitty/core';
+import { getSdkClient } from '@chatkitty/client';
 
-import type { SdkClient, CurrentUser, Channel, Message, User } from '@chatkitty/core';
+import type { SdkClient, CurrentUser, Channel, Message, User } from '@chatkitty/client';
 import { parseTimestamp } from '@/utils/dates';
 
 export const chatkitty: SdkClient = getSdkClient('afaac908-1db3-4b5c-a7ae-c040b9684403');

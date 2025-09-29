@@ -1,0 +1,41 @@
+{
+  "name": "@chatkitty/client",
+  "version": "2.105.8",
+  "description": "Headless ChatKitty client library for connecting to the ChatKitty service.",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/client.js",
+  "module": "./dist/client.mjs",
+  "types": "./dist/client.d.ts",
+  "scripts": {
+    "build": "download-chatkitty-assets client",
+    "release": "release-it --ci",
+    "prepack": "npm run build && tsc -p tsconfig.json"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/client.d.ts",
+      "import": "./dist/client.mjs",
+      "require": "./dist/client.js",
+      "default": "./dist/client.mjs"
+    },
+    "./esm": {
+      "import": "./dist/client.mjs",
+      "default": "./dist/client.mjs"
+    },
+    "./cjs": {
+      "require": "./dist/client.js",
+      "default": "./dist/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "peerDependencies": {
+    "@stomp/rx-stomp": "^2.2.0",
+    "axios": "^1.12.2"
+  },
+  "engines": {
+    "node": ">=16.14"
+  }
+}

@@ -3,6 +3,7 @@
   "version": "0.0.3",
   "license": "MIT",
   "bin": {
-    "chatkitty": "chatkitty.js"
+    "chatkitty": "chatkitty.js",
+    "download-chatkitty-assets": "download-assets.js"
   }
 }

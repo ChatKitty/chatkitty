@@ -33,5 +33,8 @@
     "tsconfig-moon": "^1.4.1",
     "typescript": "^5.9.2",
     "vite-plugin-dts": "^4.5.4"
+  },
+  "resolutions": {
+    "uuid": ">=9.0.0 <12.0.0"
   }
 }

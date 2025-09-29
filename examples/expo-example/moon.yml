@@ -1,0 +1,23 @@
+type: 'application'
+
+workspace:
+  inheritedTasks:
+    exclude: ['typecheck']
+
+toolchain:
+  typescript:
+    disabled: true
+
+fileGroups:
+  app:
+    - 'app/**'
+    - 'assets/**'
+    - 'components/**'
+    - 'constants/**'
+    - 'hooks/**'
+
+tasks:
+  serve:
+    command: 'expo start'
+    local: true
+

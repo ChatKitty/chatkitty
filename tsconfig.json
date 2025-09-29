@@ -6,6 +6,9 @@
       "path": "libraries/angular"
     },
     {
+      "path": "libraries/client"
+    },
+    {
       "path": "libraries/core"
     },
     {
