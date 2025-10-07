@@ -1,12 +1,31 @@
+#!/usr/bin/env node
+
 const child_process = require('child_process');
 
-const result = child_process.spawnSync('moon', process.argv.slice(2), {
-	shell: false,
-	stdio: 'inherit',
-});
+const commands = require('./commands');
 
-if (result.error) {
-	throw result.error;
+let args = process.argv.slice(2);
+if (args.length === 0) {
+	args = ['help'];
 }
 
-process.exitCode = result.status;
+const command = commands[args[0]];
+
+if (command) {
+	(async function () {
+		process.exitCode = await command(args.slice(1));
+	})();
+} else {
+	const result = child_process.spawnSync('moon', args, {
+		shell: false,
+		stdio: 'inherit',
+	});
+
+	if (result.error) {
+		console.error('❌ Unknown command:', args[0]);
+        process.exitCode = 1;
+        return;
+	}
+
+	process.exitCode = result.status;
+}

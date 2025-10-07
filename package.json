@@ -10,7 +10,10 @@
   "pnpm": {
     "overrides": {
       "eslint": "^9.34.0"
-    }
+    },
+    "onlyBuiltDependencies": [
+      "keytar"
+    ]
   },
   "engines": {
     "node": "20.13.1"
