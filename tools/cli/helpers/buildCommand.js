@@ -1,6 +1,8 @@
 const {colorize} = require('json-colorizer');
 
-module.exports = (scope, command) => {
+module.exports = (command) => {
+	const commands = command.commands || {};
+
 	return async (args) => {
 		const name = args[0];
 
@@ -11,15 +13,15 @@ module.exports = (scope, command) => {
 		}
 
 		if (name === '--help' || name === '-h') {
-			let help = `ChatKitty CLI\n\nUsage: chatkitty ${scope} <command> [options]\n\nCommands:\n`;
-			for (const cmd in command) {
+			let help = `ChatKitty CLI\n\nUsage: chatkitty ${command.name} <command> [options]\n\nCommands:\n`;
+			for (const cmd in commands) {
 				help += `  - ${cmd}\n`;
 			}
 			console.log(help);
 			return 0;
 		}
 
-		const cmd = command[name];
+		const cmd = commands[name];
 
 		if (!cmd) {
 			console.error(`❌ Unknown command: ${name}`);

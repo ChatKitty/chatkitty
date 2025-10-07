@@ -6,6 +6,6 @@ const channels = require('./channels');
 
 module.exports = {
 	login: login,
-	application: buildCommand('application', application),
-	channels: buildCommand('channels', channels),
+	application: buildCommand(application),
+	channels: buildCommand(channels),
 };

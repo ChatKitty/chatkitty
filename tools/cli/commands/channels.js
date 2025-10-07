@@ -3,5 +3,8 @@ const {
 } = require('../api');
 
 module.exports = {
-	list: listChannels,
+	name: 'channels',
+	commands: {
+		list: listChannels,
+	},
 };

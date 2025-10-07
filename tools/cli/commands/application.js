@@ -3,5 +3,8 @@ const {
 } = require('../api');
 
 module.exports = {
-	retrieve: retrieveApplication,
+	name: 'application',
+	commands: {
+		retrieve: retrieveApplication,
+	},
 };
