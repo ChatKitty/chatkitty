@@ -1,6 +1,6 @@
 {
   "name": "@chatkitty/cli",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "license": "MIT",
   "bin": {
     "chatkitty": "chatkitty.js",
@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "chatkitty": "^2.106.6",
+    "json-colorizer": "^3.0.1",
     "keytar": "^7.9.0"
   }
 }

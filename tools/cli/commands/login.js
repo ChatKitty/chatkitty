@@ -1,8 +1,10 @@
 const readline = require('readline');
 const keytar = require('keytar');
 
-const SERVICE = 'chatkitty-cli';
-const ACCOUNT = 'oauth2:chatkitty';
+const constants = require('../constants');
+
+const SERVICE = constants.keystore.SERVICE;
+const ACCOUNT = constants.keystore.ACCOUNT;
 
 function ask(question, { mask = false } = {}) {
 	const rl = readline.createInterface({

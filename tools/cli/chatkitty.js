@@ -6,7 +6,17 @@ const commands = require('./commands');
 
 let args = process.argv.slice(2);
 if (args.length === 0) {
-	args = ['help'];
+	args = ['--help'];
+}
+
+if (args[0] === '--help' || args[0] === '-h') {
+	let help = 'ChatKitty CLI\n\nUsage: chatkitty <command> [options]\n\nCommands:\n';
+	for (const cmd in commands) {
+		help += `  - ${cmd}\n`;
+	}
+	help += '\nFor detailed help on a command, run: chatkitty <command> --help\n';
+	console.log(help);
+	process.exit(0);
 }
 
 const command = commands[args[0]];
@@ -23,8 +33,8 @@ if (command) {
 
 	if (result.error) {
 		console.error('❌ Unknown command:', args[0]);
-        process.exitCode = 1;
-        return;
+		process.exitCode = 1;
+		return;
 	}
 
 	process.exitCode = result.status;
