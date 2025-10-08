@@ -5,9 +5,10 @@ export type ChatUiProps = {
 	widgetId: string;
 	username?: string;
 	connection?: ApiConnection;
+	mode?: "sandbox" | "live";
 };
 
-export const ChatUi = ({ widgetId, username, connection }: ChatUiProps) => {
+export const ChatUi = ({ widgetId, username, connection, mode }: ChatUiProps) => {
 	useEffect(() => {
 		if (!username && !connection) return;
 
@@ -18,7 +19,8 @@ export const ChatUi = ({ widgetId, username, connection }: ChatUiProps) => {
 				container: { height: '100%' },
 			},
 			{
-				connection,
+				...(connection && { connection }),
+				mode: mode || "live",
 			},
 		);
 	}, [widgetId, username, connection]);
