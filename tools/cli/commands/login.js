@@ -3,6 +3,10 @@ const keytar = require('keytar');
 
 const constants = require('../constants');
 
+const {
+	application: { retrieveApplication },
+} = require('../api');
+
 const SERVICE = constants.keystore.SERVICE;
 const ACCOUNT = constants.keystore.ACCOUNT;
 
@@ -27,6 +31,12 @@ module.exports = async () => {
 		};
 
 		await keytar.setPassword(SERVICE, ACCOUNT, JSON.stringify(credentials));
+
+		console.log('\n🔍 Verifying credentials...');
+
+		const app = await retrieveApplication();
+
+		console.log(`\n✅ Successfully authenticated as application: (ID: ${app.id})`);
 
 		console.log('\n✅ Credentials securely saved for ChatKitty CLI.\n');
 	} catch (err) {
