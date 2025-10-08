@@ -4,20 +4,27 @@ module.exports = (command) => {
 	const commands = command.commands || {};
 
 	return async (args) => {
-		const name = args[0];
-
-		if (!name) {
-			console.error('❌ Missing command name');
-
-			return 1;
-		}
-
-		if (name === '--help' || name === '-h') {
+		const printHelp = () => {
 			let help = `ChatKitty CLI\n\nUsage: chatkitty ${command.name} <command> [options]\n\nCommands:\n`;
 			for (const cmd in commands) {
 				help += `  - ${cmd}\n`;
 			}
 			console.log(help);
+		}
+
+		const name = args[0];
+
+		if (!name) {
+			console.error('❌ Missing command name');
+
+			printHelp();
+
+			return 1;
+		}
+
+		if (name === '--help' || name === '-h') {
+			printHelp();
+
 			return 0;
 		}
 

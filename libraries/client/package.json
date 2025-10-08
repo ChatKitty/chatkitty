@@ -10,7 +10,7 @@
   "module": "./dist/client.mjs",
   "types": "./dist/client.d.ts",
   "scripts": {
-    "build": "download-chatkitty-assets client",
+    "build": "chatkitty dev download-sdk-assets client",
     "release": "release-it --ci",
     "prepack": "npm run build && tsc -p tsconfig.json"
   },

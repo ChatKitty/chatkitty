@@ -1,10 +1,9 @@
 {
   "name": "@chatkitty/cli",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "license": "MIT",
   "bin": {
-    "chatkitty": "chatkitty.js",
-    "download-chatkitty-assets": "download-assets.js"
+    "chatkitty": "index.js"
   },
   "dependencies": {
     "@moonrepo/cli": "^1.41.3",
