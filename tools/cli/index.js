@@ -24,6 +24,13 @@ if (args[0] === '--help' || args[0] === '-h') {
 
 const command = commands[args[0]];
 
-(async function () {
-	process.exitCode = await command(args.slice(1));
-})();
+if (command) {
+	(async function () {
+		process.exitCode = await command(args.slice(1));
+	})();
+} else {
+	console.error(`❌ Unknown command: ${args[0]}\n`);
+	printHelp();
+
+	process.exit(1);
+}

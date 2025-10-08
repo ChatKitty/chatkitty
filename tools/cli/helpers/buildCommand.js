@@ -15,7 +15,7 @@ module.exports = (command) => {
 		const name = args[0];
 
 		if (!name) {
-			console.error('❌ Missing command name');
+			console.error('❌ Missing command name\n');
 
 			printHelp();
 
