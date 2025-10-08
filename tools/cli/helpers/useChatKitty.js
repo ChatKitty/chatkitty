@@ -6,7 +6,8 @@ const constants = require('../constants');
 const SERVICE = constants.keystore.SERVICE;
 const ACCOUNT = constants.keystore.ACCOUNT;
 
-const useChatKitty = async () => {
+/** @type {(callback: (chatkitty: ChatKitty) => Promise<any>) => Promise<any> } */
+const useChatKitty = async (callback) => {
 	const credentials = await keytar.getPassword(SERVICE, ACCOUNT);
 
 	if (!credentials) {
@@ -19,10 +20,14 @@ const useChatKitty = async () => {
 		throw new Error('Invalid credentials stored. Please run "chatkitty login" again.');
 	}
 
-	return new ChatKitty({
+	const chatkitty = new ChatKitty({
 		clientId: client_id,
 		clientSecret: client_secret,
 	});
+
+	const result = await callback(chatkitty);
+
+	return result.data;
 };
 
 module.exports = useChatKitty;

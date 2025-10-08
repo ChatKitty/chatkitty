@@ -1,13 +1,7 @@
-const {useChatKitty} = require('../helpers');
+const { useChatKitty } = require('../helpers');
 
-const listChannels = async () => {
-	const kitty = await useChatKitty();
-
-	const response = await kitty.Channels.listChannels();
-
-	return response.data;
-}
+const listChannels = () => useChatKitty(async (chatkitty) => await chatkitty.Channels.listChannels());
 
 module.exports = {
 	listChannels,
-}
+};
