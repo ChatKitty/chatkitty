@@ -34,13 +34,13 @@ module.exports = async () => {
 
 		console.log('\n🔍 Verifying credentials...');
 
-		const app = await retrieveApplication();
+		const application = await retrieveApplication();
 
-		console.log(`\n✅ Successfully authenticated as application: (ID: ${app.id})`);
+		console.log(`\n✅ Successfully authenticated as application: (ID: ${application.id})`);
 
 		console.log('\n✅ Credentials securely saved for ChatKitty CLI.\n');
-	} catch (err) {
-		console.error('❌ Login failed:', err.message || err);
+	} catch (e) {
+		console.error('❌ Login failed:', e.message || e);
 
 		return 1;
 	}

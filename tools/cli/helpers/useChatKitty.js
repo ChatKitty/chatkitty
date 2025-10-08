@@ -25,9 +25,17 @@ const useChatKitty = async (callback) => {
 		clientSecret: client_secret,
 	});
 
-	const result = await callback(chatkitty);
+	try {
+		const result = await callback(chatkitty);
 
-	return result.data;
+		return result.data;
+	} catch (e) {
+		if (e.response.status === 401) {
+			throw new Error('Authentication failed. Please run "chatkitty login" again.');
+		}
+
+		throw e;
+	}
 };
 
 module.exports = useChatKitty;

@@ -34,9 +34,9 @@ const download = (url, dest, timeoutMs = 20000, redirectsLeft = 5) =>
 				file.on('finish', () => file.close(resolve));
 			});
 
-			req.on('error', (err) => {
+			req.on('error', (e) => {
 				file.close(() => {
-					fs.unlink(dest, () => reject(err));
+					fs.unlink(dest, () => reject(e));
 				});
 			});
 
