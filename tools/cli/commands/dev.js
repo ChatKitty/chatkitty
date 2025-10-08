@@ -1,9 +1,8 @@
-const { downloadSdkAssets, run } = require('../dev');
+const { downloadSdkAssets } = require('../dev');
 
 module.exports = {
 	name: 'dev',
 	commands: {
-		'download-sdk-assets': downloadSdkAssets,
-		run: run,
+		'download-sdk-assets': downloadSdkAssets
 	},
 };

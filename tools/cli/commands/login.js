@@ -1,4 +1,4 @@
-const readline = require('readline');
+const { input, password } = require('@inquirer/prompts');
 const keytar = require('keytar');
 
 const constants = require('../constants');
@@ -6,57 +6,34 @@ const constants = require('../constants');
 const SERVICE = constants.keystore.SERVICE;
 const ACCOUNT = constants.keystore.ACCOUNT;
 
-function ask(question, { mask = false } = {}) {
-	const rl = readline.createInterface({
-		input: process.stdin,
-		output: process.stdout,
-	});
-
-	if (mask) {
-		rl._writeToOutput = function (stringToWrite) {
-			if (rl.stdoutMuted) rl.output.write('*');
-			else rl.output.write(stringToWrite);
-		};
-	}
-
-	return new Promise(resolve => {
-		rl.question(question, answer => {
-			rl.close();
-			resolve(answer.trim());
-		});
-		if (mask) rl.stdoutMuted = true;
-	});
-}
-
-async function run() {
-	console.log('\n🔐 ChatKitty CLI Login');
-	console.log('Enter your application OAuth 2.0 client credentials.\n');
-
-	const clientId = await ask('Client ID: ');
-	const clientSecret = await ask('Client Secret: ', { mask: true });
-
-	if (!clientId || !clientSecret) {
-		console.error('❌ Both client ID and secret are required.');
-		return 1;
-	}
-
-	const creds = {
-		client_id: clientId,
-		client_secret: clientSecret,
-		saved_at: new Date().toISOString(),
-	};
-
-	await keytar.setPassword(SERVICE, ACCOUNT, JSON.stringify(creds));
-
-	console.log('\n✅ Credentials securely saved for ChatKitty CLI.\n');
-	return 0;
-}
-
-module.exports = async function login() {
+module.exports = async () => {
 	try {
-		return await run();
+		console.log('\n🔐 ChatKitty CLI Login');
+		console.log('Enter your application OAuth 2.0 client credentials.\n');
+
+		const clientId = await input({ message: 'Client ID: ' });
+		const clientSecret = await password({ message: 'Client Secret: ' });
+
+		if (!clientId || !clientSecret) {
+			console.error('❌ Both client ID and secret are required.');
+
+			return 1;
+		}
+
+		const credentials = {
+			client_id: clientId,
+			client_secret: clientSecret,
+			saved_at: new Date().toISOString(),
+		};
+
+		await keytar.setPassword(SERVICE, ACCOUNT, JSON.stringify(credentials));
+
+		console.log('\n✅ Credentials securely saved for ChatKitty CLI.\n');
 	} catch (err) {
 		console.error('❌ Login failed:', err.message || err);
+
 		return 1;
 	}
+
+	return 0;
 };

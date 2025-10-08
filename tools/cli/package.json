@@ -6,6 +6,7 @@
     "chatkitty": "index.js"
   },
   "dependencies": {
+    "@inquirer/prompts": "^7.8.6",
     "@moonrepo/cli": "^1.41.3",
     "chatkitty": "^2.106.6",
     "json-colorizer": "^3.0.1",
