@@ -1,6 +1,6 @@
 const {colorize} = require('json-colorizer');
 
-module.exports = (command) => {
+const buildCommand = (command) => {
 	const commands = command.commands || {};
 
 	return async (args) => {
@@ -51,3 +51,5 @@ module.exports = (command) => {
 		}
 	}
 }
+
+module.exports = buildCommand;

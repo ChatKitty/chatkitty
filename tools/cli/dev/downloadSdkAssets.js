@@ -3,12 +3,12 @@ const path = require('path');
 
 const { download, getJson, mkdir } = require('../helpers');
 
-const PACKAGE = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-
-const DIST_DIR = 'dist';
-const MANIFEST_URL = `https://cdn.chatkitty.com/dist/${PACKAGE.version}/manifest.json`;
-
 module.exports = async (args) => {
+	const PACKAGE = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+
+	const DIST_DIR = 'dist';
+	const MANIFEST_URL = `https://cdn.chatkitty.com/dist/${PACKAGE.version}/manifest.json`;
+
 	const name = args[0];
 
 	if (!name) {
