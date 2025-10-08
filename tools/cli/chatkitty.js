@@ -26,13 +26,13 @@ if (command) {
 		process.exitCode = await command(args.slice(1));
 	})();
 } else {
-	const result = child_process.spawnSync('moon', args, {
+	const result = child_process.spawnSync('npx', ['moon', ...args], {
 		shell: false,
 		stdio: 'inherit',
 	});
 
 	if (result.error) {
-		console.error('❌ Unknown command:', args[0]);
+		console.error('❌ Failed to execute command:', result.error.message || result.error);
 		process.exitCode = 1;
 		return;
 	}
