@@ -30,7 +30,7 @@ const useChatKitty = async (callback) => {
 
 		return result.data;
 	} catch (e) {
-		if (e.response.status === 401) {
+		if (e?.response?.status === 401) {
 			throw new Error('Authentication failed. Please run "chatkitty login" again.');
 		}
 

@@ -1,10 +1,11 @@
-const {
-	application: { retrieveApplication },
-} = require('../api');
+const { buildCliExports } = require('../helpers');
 
 module.exports = {
 	name: 'application',
-	commands: {
-		retrieve: retrieveApplication,
-	},
+	description: 'Commands for managing the application',
+	commands: buildCliExports(
+		{
+			api: 'ApplicationApi'
+		}
+	)
 };

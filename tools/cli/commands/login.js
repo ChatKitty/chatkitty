@@ -1,11 +1,9 @@
 const { input, password } = require('@inquirer/prompts');
 const keytar = require('keytar');
 
-const constants = require('../constants');
+const { ChatKitty } = require('chatkitty');
 
-const {
-	application: { retrieveApplication },
-} = require('../api');
+const constants = require('../constants');
 
 const SERVICE = constants.keystore.SERVICE;
 const ACCOUNT = constants.keystore.ACCOUNT;
@@ -24,6 +22,27 @@ module.exports = async () => {
 			return 1;
 		}
 
+		try {
+			console.log('\n🔍 Verifying credentials...');
+
+			const chatkitty = new ChatKitty({
+				clientId,
+				clientSecret,
+			});
+
+			const application = await chatkitty.Application.retrieveAuthenticatedApplication();
+
+			console.log(`\n✅ Successfully authenticated as application: (ID: ${application.id})`);
+		} catch (e) {
+			if (e?.response?.status === 401) {
+				console.error('❌ Authentication failed: Please check your client ID and secret.');
+			}
+
+			console.error(e.message || e);
+
+			return 1;
+		}
+
 		const credentials = {
 			client_id: clientId,
 			client_secret: clientSecret,
@@ -31,12 +50,6 @@ module.exports = async () => {
 		};
 
 		await keytar.setPassword(SERVICE, ACCOUNT, JSON.stringify(credentials));
-
-		console.log('\n🔍 Verifying credentials...');
-
-		const application = await retrieveApplication();
-
-		console.log(`\n✅ Successfully authenticated as application: (ID: ${application.id})`);
 
 		console.log('\n✅ Credentials securely saved for ChatKitty CLI.\n');
 	} catch (e) {

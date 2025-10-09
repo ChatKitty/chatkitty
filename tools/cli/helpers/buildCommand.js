@@ -45,7 +45,7 @@ const buildCommand = (command) => {
 
 			return 0;
 		} catch (e) {
-			console.error('❌ Command failed:', e.message || e);
+			console.error('❌ :', e.message || e);
 
 			return 1;
 		}

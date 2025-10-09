@@ -1,10 +1,11 @@
-const {
-	channels: { listChannels },
-} = require('../api');
+const { buildCliExports } = require('../helpers');
 
 module.exports = {
 	name: 'channels',
-	commands: {
-		list: listChannels,
-	},
+	description: 'Commands for managing channels',
+	commands: buildCliExports(
+		{
+			api: 'ChannelsApi'
+		}
+	)
 };
