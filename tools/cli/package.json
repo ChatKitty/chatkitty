@@ -1,6 +1,6 @@
 {
   "name": "@chatkitty/cli",
-  "version": "0.0.13",
+  "version": "0.0.15",
   "license": "MIT",
   "bin": {
     "chatkitty": "index.js"

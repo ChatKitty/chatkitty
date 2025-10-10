@@ -25,9 +25,9 @@ const DEFAULT_TRANSLATORS = Object.freeze({
 	array: (v) =>
 		typeof v === 'string'
 			? v
-				.split(',')
-				.map((x) => x.trim())
-				.filter((x) => x.length > 0)
+					.split(',')
+					.map((x) => x.trim())
+					.filter((x) => x.length > 0)
 			: [],
 	set: (v) =>
 		new Set(
@@ -77,7 +77,8 @@ const getParamNames = (fn) => {
 			) // strip inline comments
 			.filter(Boolean)
 			.map(stripDefaultAndDestructure)
-			.filter(Boolean);
+			.filter(Boolean)
+			.slice(0, fn.length - 1); // exclude options bag
 	}
 
 	// Try single-arg arrow form: arg => ...
@@ -223,17 +224,22 @@ const assignOption = (target, key, value) => {
  *  - repeated flags -> array (e.g., --tag a --tag b)
  *  - dot-notation for nested objects (e.g., --settings.welcomeMessage Hi)
  *  - JSON values for objects/arrays (e.g., --settings '{"a":1}')
- *  - "-" toggles explicit bag mode (treat all flags as a single params object)
+ *  - "-" enables targeted bag mode: subsequent positional key/value pairs
+ *    are collected into a bag to be placed into the next missing param slot
+ *    (preferring "*Resource" parameters) during ordering.
  */
 const parseArgs = (argv, { translators, aliases, defaults }) => {
 	const opts = {};
 	const rest = [];
+	let bagMode = false;
 
 	for (let i = 0; i < argv.length; i++) {
 		const token = argv[i];
 
-		// Lone "-" toggles "bag mode" (treat all flags as a single params object)
+		// Lone "-" enables "targeted bag mode" for subsequent positionals
 		if (token === '-') {
+			bagMode = true;
+			// mark for downstream processing
 			opts.__bag = true;
 			continue;
 		}
@@ -285,6 +291,21 @@ const parseArgs = (argv, { translators, aliases, defaults }) => {
 	}
 
 	if (rest.length) opts._ = rest;
+
+	// If bag mode was enabled via "-", consume positional pairs into a bag payload.
+	// Example: "-" secret.prop "val"  -> { secret: { prop: "val" } }
+	if (bagMode) {
+		const bag = {};
+		const items = opts._ || [];
+		for (let i = 0; i < items.length; i += 2) {
+			const key = String(items[i]);
+			const rawVal = items[i + 1];
+			const leaf = key.includes('.') ? key.split('.').pop() : key;
+			const val = rawVal === undefined ? true : coerceValue(leaf, rawVal, translators);
+			assignOption(bag, key, val);
+		}
+		opts.__bagPayload = bag;
+	}
 
 	// Apply defaults (respecting dot-notation in keys)
 	for (const [k, dv] of Object.entries(defaults)) {
@@ -354,21 +375,21 @@ const resolveMethod = (api, requestedName) => {
  * Order parsed options to match function parameter names. Reports unknowns.
  * Returns an array ready to spread into the target function call.
  *
- * If the user included a lone "-" token, pass the entire flag bag (minus "_")
- * as the single argument (explicit "bag mode").
+ * Targeted bag mode:
+ *  - If the user included a lone "-" token, positional key/value pairs were
+ *    collected into opts.__bagPayload.
+ *  - Insert that bag into the first missing parameter slot, preferring any
+ *    parameter named with a "*Resource" suffix.
  */
 const toOrderedArgs = (fn, opts, { aliases, onUnknownArg }) => {
 	const names = getParamNames(fn);
-	const bagMode = !!opts.__bag;
+	const hadBagMode = !!opts.__bag;
 
-	// Strip internal control flag before any further processing/reporting.
+	// Extract and strip internal control flags before any further processing/reporting.
+	const bagPayload =
+		opts.__bagPayload && isPlainObject(opts.__bagPayload) ? opts.__bagPayload : undefined;
 	if ('__bag' in opts) delete opts.__bag;
-
-	// If user explicitly requested bag mode via "-", pass the whole bag.
-	if (bagMode) {
-		const { _, ...bag } = opts;
-		return [bag];
-	}
+	if ('__bagPayload' in opts) delete opts.__bagPayload;
 
 	const used = new Set();
 
@@ -390,9 +411,42 @@ const toOrderedArgs = (fn, opts, { aliases, onUnknownArg }) => {
 			return opts[aliasKey];
 		}
 
+		// try without Resource suffix (common in SDKs)
+		if (name.endsWith('Resource')) {
+			const short = name.slice(0, -8);
+			if (short in opts) {
+				used.add(short);
+				return opts[short];
+			}
+
+			const shortKebab = short.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`);
+			const shortAliasKey = aliases[shortKebab] ? kebabToCamel(aliases[shortKebab]) : null;
+			if (shortAliasKey && shortAliasKey in opts) {
+				used.add(shortAliasKey);
+				return opts[shortAliasKey];
+			}
+		}
+
 		// undefined if not provided
 		return undefined;
 	});
+
+	// If targeted bag mode was used, place the bag into the best slot:
+	// 1) First missing param whose name ends with "Resource"
+	// 2) Otherwise, the first missing param
+	if (hadBagMode) {
+		const placeAt =
+			names.findIndex((n, i) => n && n.endsWith('Resource') && ordered[i] === undefined) !== -1
+				? names.findIndex((n, i) => n && n.endsWith('Resource') && ordered[i] === undefined)
+				: names.findIndex((_, i) => ordered[i] === undefined);
+
+		if (placeAt !== -1) {
+			ordered[placeAt] = bagPayload ?? {};
+		} else {
+			// no missing param slots; append as a last argument
+			ordered.push(bagPayload ?? {});
+		}
+	}
 
 	// consider a flag "used" if a consumed parent path matches
 	const isUnderUsed = (full) => {
@@ -432,6 +486,19 @@ const listCommandKeys = (apiName) => {
 	}
 };
 
+/** Render per-command help text. */
+const renderMethodHelp = (apiName, methodKebab, fn) => {
+	const params = getParamNames(fn);
+
+	const help = [
+		`Usage: ${methodKebab} [options]`,
+		'',
+		`[options]:\n${params.map((p) => `${p}`).join('\n')}`,
+	].join('\n');
+
+	console.log(help);
+};
+
 const buildCliExports = (config) => {
 	const {
 		api: apiName,
@@ -442,9 +509,7 @@ const buildCliExports = (config) => {
 	} = config || {};
 
 	if (!apiName || typeof apiName !== 'string') {
-		throw new Error(
-			"buildCliExports: 'api' is required and must be a string.",
-		);
+		throw new Error("buildCliExports: 'api' is required and must be a string.");
 	}
 
 	return new Proxy(
@@ -458,6 +523,11 @@ const buildCliExports = (config) => {
 
 				return async (argv) => {
 					const input = Array.isArray(argv) ? argv : [];
+
+					// If the user asked for help on this command, print it.
+					// Accept both --help and -h anywhere in argv.
+					const wantsHelp = input.some((t) => t === '--help' || t === '-h');
+
 					return useChatKitty(async (chatkitty) => {
 						const api = chatkitty[apiName];
 						if (!api) {
@@ -466,6 +536,13 @@ const buildCliExports = (config) => {
 
 						const resolvedName = resolveMethod(api, requested);
 						const fn = api[resolvedName];
+						const methodKebab = camelToKebab(resolvedName);
+
+						if (wantsHelp) {
+							renderMethodHelp(apiName, methodKebab, fn);
+
+							return {};
+						}
 
 						const opts = parseArgs(input, {
 							translators,
@@ -481,7 +558,8 @@ const buildCliExports = (config) => {
 			},
 
 			ownKeys() {
-				return listCommandKeys(apiName);
+				// include a synthetic "help" command alongside actual API methods
+				return ['help', ...listCommandKeys(apiName)];
 			},
 
 			getOwnPropertyDescriptor() {
@@ -490,5 +568,7 @@ const buildCliExports = (config) => {
 		},
 	);
 };
+
+module.exports = buildCliExports;
 
 module.exports = buildCliExports;
