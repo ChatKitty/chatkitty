@@ -30,9 +30,9 @@ module.exports = async () => {
 				clientSecret,
 			});
 
-			const application = await chatkitty.Application.retrieveAuthenticatedApplication();
+			const application = await chatkitty.ApplicationApi.retrieveApplication();
 
-			console.log(`\n✅ Successfully authenticated as application: (ID: ${application.id})`);
+			console.log(`\n✅ Successfully authenticated as application: (ID: ${application.data.id})`);
 		} catch (e) {
 			if (e?.response?.status === 401) {
 				console.error('❌ Authentication failed: Please check your client ID and secret.');

@@ -2,12 +2,11 @@
  * Build a dynamic proxy of CLI-callable methods for a given ChatKitty API surface.
  * - Normalizes command names (kebab/camel/Pascal).
  * - Parses argv into options (with type coercion, aliases, and defaults).
+ * - Supports nested objects via dot-notation and JSON values.
  * - Orders options to match target function parameter names.
- * - Reports unknown flags.
- *
- * Usage:
- *   const commands = buildCliExports({ api: 'ChannelsApi' });
- *   await commands['create-channel'](['--name', 'general', '--private']);
+ * - Reports unknown flags (avoids false positives for nested leaves).
+ * - Explicit “bag mode” with a lone "-" token: pass the entire flag bag
+ *   as a single object argument.
  */
 const { ChatKitty } = require('chatkitty');
 
@@ -26,9 +25,9 @@ const DEFAULT_TRANSLATORS = Object.freeze({
 	array: (v) =>
 		typeof v === 'string'
 			? v
-					.split(',')
-					.map((x) => x.trim())
-					.filter((x) => x.length > 0)
+				.split(',')
+				.map((x) => x.trim())
+				.filter((x) => x.length > 0)
 			: [],
 	set: (v) =>
 		new Set(
@@ -55,7 +54,7 @@ const normalizeFlag = (flag, aliases) => {
 	return kebabToCamel(aliased);
 };
 
-/** Robust-ish function parameter name extraction (best-effort). */
+/** Function parameter name extraction. */
 const getParamNames = (fn) => {
 	const stripDefaultAndDestructure = (p) => {
 		const noDefault = p.replace(/=.*$/, '').trim();
@@ -88,7 +87,19 @@ const getParamNames = (fn) => {
 	return [];
 };
 
-/** Best-effort scalar type coercion when no custom translator is present. */
+/** Try to JSON-parse strings that look like objects/arrays. */
+const tryParseJson = (raw) => {
+	if (typeof raw !== 'string') return { ok: false };
+	const trimmed = raw.trim();
+	if (!/^[\[{].*[\]}]$/.test(trimmed)) return { ok: false };
+	try {
+		return { ok: true, value: JSON.parse(trimmed) };
+	} catch {
+		return { ok: false };
+	}
+};
+
+/** Scalar type coercion when no custom translator is present. */
 const coerceValue = (key, raw, translators) => {
 	if (translators[key]) return translators[key](raw, key);
 
@@ -100,8 +111,15 @@ const coerceValue = (key, raw, translators) => {
 		return raw.map((x) => coerceValue(key, x, translators));
 	}
 
+	// Objects pass through
+	if (raw && typeof raw === 'object') return raw;
+
 	// Non-strings pass through
 	if (typeof raw !== 'string') return raw;
+
+	// JSON objects/arrays
+	const parsed = tryParseJson(raw);
+	if (parsed.ok) return parsed.value;
 
 	// Explicit boolean strings
 	if (/^(true|false)$/i.test(raw)) return /^true$/i.test(raw);
@@ -131,16 +149,81 @@ const coerceValue = (key, raw, translators) => {
 	return raw;
 };
 
+/** Deep merge for plain objects (used when repeating the same dot-path). */
+const isPlainObject = (v) =>
+	v != null &&
+	typeof v === 'object' &&
+	(v.constructor === Object || Object.getPrototypeOf(v) === null);
+
+const deepMerge = (a, b) => {
+	if (!isPlainObject(a) || !isPlainObject(b)) return b;
+	const out = { ...a };
+	for (const [k, v] of Object.entries(b)) {
+		if (k in out) out[k] = deepMerge(out[k], v);
+		else out[k] = v;
+	}
+	return out;
+};
+
+/**
+ * Assign a value into `target` at `key`, supporting dot-notation for nested objects.
+ * Repeated flags on the same leaf become arrays (flattened when needed).
+ */
+const assignOption = (target, key, value) => {
+	if (!key.includes('.')) {
+		if (key in target) {
+			const prev = target[key];
+			if (isPlainObject(prev) && isPlainObject(value)) {
+				target[key] = deepMerge(prev, value);
+			} else {
+				// Flatten on repetition (avoid nested arrays)
+				const prevArr = Array.isArray(prev) ? prev : [prev];
+				const valArr = Array.isArray(value) ? value : [value];
+				target[key] = prevArr.concat(valArr);
+			}
+		} else {
+			target[key] = value;
+		}
+		return;
+	}
+
+	const parts = key.split('.');
+	let node = target;
+	for (let i = 0; i < parts.length - 1; i++) {
+		const p = parts[i];
+		if (!isPlainObject(node[p])) node[p] = {};
+		node = node[p];
+	}
+	const leaf = parts[parts.length - 1];
+
+	if (leaf in node) {
+		const prev = node[leaf];
+		if (isPlainObject(prev) && isPlainObject(value)) {
+			node[leaf] = deepMerge(prev, value);
+		} else {
+			// Flatten on repetition (avoid nested arrays)
+			const prevArr = Array.isArray(prev) ? prev : [prev];
+			const valArr = Array.isArray(value) ? value : [value];
+			node[leaf] = prevArr.concat(valArr);
+		}
+	} else {
+		node[leaf] = value;
+	}
+};
+
 /**
  * Parse argv -> option bag with coercion, defaults, and rest args in "_".
  * Supports:
  *  - --flag
  *  - --flag value
- *  - --flag=value
+ *  - --flag=value   (empty value becomes empty string)
  *  - --no-flag
  *  - negative numeric values after flags (e.g., --count -1)
  *  - -- terminator for positional args
  *  - repeated flags -> array (e.g., --tag a --tag b)
+ *  - dot-notation for nested objects (e.g., --settings.welcomeMessage Hi)
+ *  - JSON values for objects/arrays (e.g., --settings '{"a":1}')
+ *  - "-" toggles explicit bag mode (treat all flags as a single params object)
  */
 const parseArgs = (argv, { translators, aliases, defaults }) => {
 	const opts = {};
@@ -148,6 +231,12 @@ const parseArgs = (argv, { translators, aliases, defaults }) => {
 
 	for (let i = 0; i < argv.length; i++) {
 		const token = argv[i];
+
+		// Lone "-" toggles "bag mode" (treat all flags as a single params object)
+		if (token === '-') {
+			opts.__bag = true;
+			continue;
+		}
 
 		// everything after `--` is positional
 		if (token === '--') {
@@ -157,8 +246,8 @@ const parseArgs = (argv, { translators, aliases, defaults }) => {
 
 		// --no-flag (negation)
 		if (/^--no-/.test(token)) {
-			const key = normalizeFlag(token.slice(5), aliases);
-			opts[key] = false;
+			const key = normalizeFlag(token.slice(5), aliases); // normalize before dot handling
+			assignOption(opts, key, false);
 			continue;
 		}
 
@@ -169,13 +258,9 @@ const parseArgs = (argv, { translators, aliases, defaults }) => {
 			if (eqIdx !== -1) {
 				const key = normalizeFlag(token.slice(0, eqIdx), aliases);
 				const rawVal = token.slice(eqIdx + 1);
-				const val = rawVal === '' ? true : rawVal;
-				if (key in opts) {
-					const prev = opts[key];
-					opts[key] = Array.isArray(prev) ? prev.concat(val) : [prev, val];
-				} else {
-					opts[key] = val;
-				}
+				// QoL: --flag= -> '' (empty string), not true
+				const val = rawVal === '' ? '' : coerceValue(key.split('.').pop(), rawVal, translators);
+				assignOption(opts, key, val);
 				continue;
 			}
 
@@ -186,16 +271,11 @@ const parseArgs = (argv, { translators, aliases, defaults }) => {
 			const isNegativeNumber = typeof next === 'string' && /^-[0-9.]/.test(next);
 
 			if (next != null && (!looksLikeFlag || isNegativeNumber)) {
-				// support repeated flags → array
-				if (key in opts) {
-					const prev = opts[key];
-					opts[key] = Array.isArray(prev) ? prev.concat(next) : [prev, next];
-				} else {
-					opts[key] = next;
-				}
+				const val = coerceValue(key.split('.').pop(), next, translators);
+				assignOption(opts, key, val);
 				i++;
 			} else {
-				opts[key] = true;
+				assignOption(opts, key, true);
 			}
 			continue;
 		}
@@ -204,16 +284,23 @@ const parseArgs = (argv, { translators, aliases, defaults }) => {
 		rest.push(token);
 	}
 
-	// Coerce values (support arrays)
-	for (const [k, v] of Object.entries(opts)) {
-		opts[k] = coerceValue(k, v, translators);
-	}
-
 	if (rest.length) opts._ = rest;
 
-	// Apply defaults
+	// Apply defaults (respecting dot-notation in keys)
 	for (const [k, dv] of Object.entries(defaults)) {
-		if (!(k in opts)) opts[k] = typeof dv === 'function' ? dv() : dv;
+		const parts = k.split('.');
+		let node = opts;
+		for (let i = 0; i < parts.length - 1; i++) {
+			const p = parts[i];
+			if (!isPlainObject(node[p])) node[p] = {};
+			node = node[p];
+		}
+		const leaf = parts[parts.length - 1];
+		if (!(leaf in node)) {
+			const rawDefault = typeof dv === 'function' ? dv() : dv;
+			const coerced = coerceValue(leaf, rawDefault, translators);
+			node[leaf] = coerced;
+		}
 	}
 
 	// Unknowns are reported later in toOrderedArgs, where we know which ones were consumed.
@@ -260,23 +347,25 @@ const resolveMethod = (api, requestedName) => {
 		.map((n) => `• ${camelToKebab(n)}`)
 		.join('\n');
 
-	throw new Error(
-		`Method '${requestedName}' not found.\n\nAvailable commands:\n${suggestions}`,
-	);
+	throw new Error(`Method '${requestedName}' not found.\n\nAvailable commands:\n${suggestions}`);
 };
 
 /**
  * Order parsed options to match function parameter names. Reports unknowns.
  * Returns an array ready to spread into the target function call.
  *
- * If the function appears to take a single "options" object, pass the entire
- * flag bag (minus "_") as that single argument.
+ * If the user included a lone "-" token, pass the entire flag bag (minus "_")
+ * as the single argument (explicit "bag mode").
  */
 const toOrderedArgs = (fn, opts, { aliases, onUnknownArg }) => {
 	const names = getParamNames(fn);
+	const bagMode = !!opts.__bag;
 
-	// Single-options-object pass-through
-	if (names.length === 1) {
+	// Strip internal control flag before any further processing/reporting.
+	if ('__bag' in opts) delete opts.__bag;
+
+	// If user explicitly requested bag mode via "-", pass the whole bag.
+	if (bagMode) {
 		const { _, ...bag } = opts;
 		return [bag];
 	}
@@ -305,11 +394,29 @@ const toOrderedArgs = (fn, opts, { aliases, onUnknownArg }) => {
 		return undefined;
 	});
 
-	// Report unknown flags (ignore "_" and any that were consumed)
-	Object.keys(opts).forEach((k) => {
-		if (k === '_' || used.has(k)) return;
-		onUnknownArg(k);
-	});
+	// consider a flag "used" if a consumed parent path matches
+	const isUnderUsed = (full) => {
+		for (const u of used) {
+			if (full === u || full.startsWith(u + '.')) return true;
+		}
+		return false;
+	};
+
+	// Report unknown flags (ignore "_" and any that were consumed directly or via parent)
+	const reportUnknown = (obj, parentKey = '') => {
+		Object.keys(obj).forEach((k) => {
+			if (k === '_' || k === '__bag') return;
+			const full = parentKey ? `${parentKey}.${k}` : k;
+			const isNested = isPlainObject(obj[k]) && !Array.isArray(obj[k]);
+			if (isNested) {
+				reportUnknown(obj[k], full);
+			} else if (!isUnderUsed(full)) {
+				onUnknownArg(full);
+			}
+		});
+	};
+
+	reportUnknown(opts);
 
 	return ordered;
 };
@@ -336,7 +443,7 @@ const buildCliExports = (config) => {
 
 	if (!apiName || typeof apiName !== 'string') {
 		throw new Error(
-			"buildCliExports: 'api' is required and must be a string (e.g., 'ChannelsApi').",
+			"buildCliExports: 'api' is required and must be a string.",
 		);
 	}
 
