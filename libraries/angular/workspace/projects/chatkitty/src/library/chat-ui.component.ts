@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {connectApi, loadChatUi} from "@chatkitty/core";
+import { loadChatUi, type ApiConnection } from '@chatkitty/core';
 
 @Component({
   selector: 'ChatUi',
@@ -12,37 +12,27 @@ import {connectApi, loadChatUi} from "@chatkitty/core";
 })
 export class ChatUi {
 
-  @Input({required: true}) apiKey: string = "";
-
-  @Input({required: true}) username: string = "";
-
   @Input({required: true}) widgetId: string = "";
+
+  @Input({required: false}) username: string | undefined;
+
+  @Input({required: false}) connection: ApiConnection | undefined;
+
+  @Input({required: false}) mode: ("sandbox" | "live") = "live";
 
 
   async ngOnInit() {
-
-    const connection = await connectApi({
-      apiKey: this.apiKey,
-      username: this.username
-    });
+    const connection = this.connection;
 
     loadChatUi(
       {
         widgetId: this.widgetId,
-        container: {height: "100%"},
-        audio: {enabled: true},
-        components: {
-          chat: (_context) => ({
-            menuActions: [],
-            onMounted: () => {
-            },
-          })
-        },
-        templates: {}
+        username: this.username,
+        container: { height: "100%" }
       },
       {
-        timeout: 50000,
-        connection
+        ...(connection && { connection }),
+        mode: this.mode || "live",
       }
     );
   }
