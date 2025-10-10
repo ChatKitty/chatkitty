@@ -9,8 +9,9 @@
  *   const commands = buildCliExports({ api: 'ChannelsApi' });
  *   await commands['create-channel'](['--name', 'general', '--private']);
  */
-const useChatKitty = require('./useChatKitty');
 const { ChatKitty } = require('chatkitty');
+
+const useChatKitty = require('./useChatKitty');
 
 const DUMMY_KITTY = new ChatKitty({
 	clientId: 'DUMMY_ID_FOR_INTROSPECTION_ONLY',
@@ -44,6 +45,7 @@ const camelToKebab = (s) =>
 	String(s)
 		.replace(/([a-z0-9])([A-Z])/g, '$1-$2')
 		.replace(/([A-Z])([A-Z][a-z])/g, '$1-$2')
+		.replace(/_/g, '-') // also normalize underscores
 		.toLowerCase();
 
 /** Normalize a CLI flag: strip leading dashes, apply alias, convert kebab->camel */
@@ -54,12 +56,12 @@ const normalizeFlag = (flag, aliases) => {
 };
 
 /** Robust-ish function parameter name extraction (best-effort). */
-const getParamNames = fn => {
-    const stripDefaultAndDestructure = p => {
-        const noDefault = p.replace(/=.*$/, '').trim();
-        const id = noDefault.match(/^[A-Za-z_$][\w$]*$/);
-        return id ? id[0] : null;
-    };
+const getParamNames = (fn) => {
+	const stripDefaultAndDestructure = (p) => {
+		const noDefault = p.replace(/=.*$/, '').trim();
+		const id = noDefault.match(/^[A-Za-z_$][\w$]*$/);
+		return id ? id[0] : null;
+	};
 
 	const src = Function.prototype.toString.call(fn);
 
@@ -68,7 +70,12 @@ const getParamNames = fn => {
 	if (paren) {
 		return paren[1]
 			.split(',')
-			.map((s) => s.trim())
+			.map((s) =>
+				s
+					.replace(/\/\*.*?\*\//g, '')
+					.replace(/\/\/.*$/g, '')
+					.trim(),
+			) // strip inline comments
 			.filter(Boolean)
 			.map(stripDefaultAndDestructure)
 			.filter(Boolean);
@@ -88,11 +95,23 @@ const coerceValue = (key, raw, translators) => {
 	// Preserve booleans eagerly
 	if (raw === true || raw === false) return raw;
 
+	// Arrays: coerce each element
+	if (Array.isArray(raw)) {
+		return raw.map((x) => coerceValue(key, x, translators));
+	}
+
 	// Non-strings pass through
 	if (typeof raw !== 'string') return raw;
 
 	// Explicit boolean strings
 	if (/^(true|false)$/i.test(raw)) return /^true$/i.test(raw);
+
+	// Epoch millis / seconds (10 or 13 digits)
+	if (/^\d{10,13}$/.test(raw)) {
+		const ms = raw.length === 10 ? Number(raw) * 1000 : Number(raw);
+		const d = new Date(ms);
+		if (!Number.isNaN(d.getTime())) return d;
+	}
 
 	// Integers / Floats
 	if (/^[+-]?\d+$/.test(raw)) return DEFAULT_TRANSLATORS.int(raw);
@@ -112,7 +131,17 @@ const coerceValue = (key, raw, translators) => {
 	return raw;
 };
 
-/** Parse argv -> option bag with coercion, defaults, and rest args in "_" */
+/**
+ * Parse argv -> option bag with coercion, defaults, and rest args in "_".
+ * Supports:
+ *  - --flag
+ *  - --flag value
+ *  - --flag=value
+ *  - --no-flag
+ *  - negative numeric values after flags (e.g., --count -1)
+ *  - -- terminator for positional args
+ *  - repeated flags -> array (e.g., --tag a --tag b)
+ */
 const parseArgs = (argv, { translators, aliases, defaults }) => {
 	const opts = {};
 	const rest = [];
@@ -120,31 +149,62 @@ const parseArgs = (argv, { translators, aliases, defaults }) => {
 	for (let i = 0; i < argv.length; i++) {
 		const token = argv[i];
 
-		// --no-flag
+		// everything after `--` is positional
+		if (token === '--') {
+			rest.push(...argv.slice(i + 1));
+			break;
+		}
+
+		// --no-flag (negation)
 		if (/^--no-/.test(token)) {
 			const key = normalizeFlag(token.slice(5), aliases);
 			opts[key] = false;
 			continue;
 		}
 
-		// --flag or --flag value
+		// --flag*, --flag=value, or --flag value
 		if (/^--/.test(token)) {
+			// --flag=value
+			const eqIdx = token.indexOf('=');
+			if (eqIdx !== -1) {
+				const key = normalizeFlag(token.slice(0, eqIdx), aliases);
+				const rawVal = token.slice(eqIdx + 1);
+				const val = rawVal === '' ? true : rawVal;
+				if (key in opts) {
+					const prev = opts[key];
+					opts[key] = Array.isArray(prev) ? prev.concat(val) : [prev, val];
+				} else {
+					opts[key] = val;
+				}
+				continue;
+			}
+
 			const key = normalizeFlag(token, aliases);
 			const next = argv[i + 1];
 
-			if (next == null || /^--/.test(next)) {
-				opts[key] = true;
-			} else {
-				opts[key] = next;
+			const looksLikeFlag = typeof next === 'string' && /^--[A-Za-z]/.test(next);
+			const isNegativeNumber = typeof next === 'string' && /^-[0-9.]/.test(next);
+
+			if (next != null && (!looksLikeFlag || isNegativeNumber)) {
+				// support repeated flags → array
+				if (key in opts) {
+					const prev = opts[key];
+					opts[key] = Array.isArray(prev) ? prev.concat(next) : [prev, next];
+				} else {
+					opts[key] = next;
+				}
 				i++;
+			} else {
+				opts[key] = true;
 			}
-		} else {
-			// positional
-			rest.push(token);
+			continue;
 		}
+
+		// positional
+		rest.push(token);
 	}
 
-	// Coerce values
+	// Coerce values (support arrays)
 	for (const [k, v] of Object.entries(opts)) {
 		opts[k] = coerceValue(k, v, translators);
 	}
@@ -161,7 +221,7 @@ const parseArgs = (argv, { translators, aliases, defaults }) => {
 };
 
 /** Enumerate function names on instance + prototype (excluding constructor). */
-const enumerateApiMethods = api => {
+const enumerateApiMethods = (api) => {
 	const names = new Set();
 
 	const proto = Object.getPrototypeOf(api);
@@ -208,9 +268,19 @@ const resolveMethod = (api, requestedName, apiName) => {
 /**
  * Order parsed options to match function parameter names. Reports unknowns.
  * Returns an array ready to spread into the target function call.
+ *
+ * If the function appears to take a single "options" object, pass the entire
+ * flag bag (minus "_") as that single argument.
  */
 const toOrderedArgs = (fn, opts, { aliases, onUnknownArg }) => {
 	const names = getParamNames(fn);
+
+	// Single-options-object pass-through
+	if (names.length === 1) {
+		const { _, ...bag } = opts;
+		return [bag];
+	}
+
 	const used = new Set();
 
 	const ordered = names.map((name) => {
@@ -222,7 +292,7 @@ const toOrderedArgs = (fn, opts, { aliases, onUnknownArg }) => {
 			return opts[name];
 		}
 
-		// try kebab alias
+		// try kebab alias (kebab-case param names map via aliases)
 		const kebab = name.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`);
 		const aliasKey = aliases[kebab] ? kebabToCamel(aliases[kebab]) : null;
 
@@ -245,15 +315,17 @@ const toOrderedArgs = (fn, opts, { aliases, onUnknownArg }) => {
 };
 
 /** Lazily enumerate API method keys (kebab-cased) without leaking credentials or logging. */
-const listCommandKeys = apiName => {
-	const api = DUMMY_KITTY[apiName];
-
-	if (!api) return [];
-
-	return enumerateApiMethods(api).map((m) => camelToKebab(m));
+const listCommandKeys = (apiName) => {
+	try {
+		const api = DUMMY_KITTY[apiName];
+		if (!api) return [];
+		return enumerateApiMethods(api).map((m) => camelToKebab(m));
+	} catch {
+		return [];
+	}
 };
 
-const buildCliExports = config => {
+const buildCliExports = (config) => {
 	const {
 		api: apiName,
 		translators = {},
@@ -277,7 +349,7 @@ const buildCliExports = config => {
 
 				const requested = rawKey; // accept kebab, camel, Pascal
 
-				return async function cliWrapper(argv) {
+				return async (argv) => {
 					const input = Array.isArray(argv) ? argv : [];
 					return useChatKitty(async (chatkitty) => {
 						const api = chatkitty[apiName];
