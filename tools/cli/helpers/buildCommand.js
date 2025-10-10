@@ -1,16 +1,19 @@
-const {colorize} = require('json-colorizer');
+const { colorize } = require('json-colorizer');
 
 const buildCommand = (command) => {
 	const commands = command.commands || {};
 
 	return async (args) => {
 		const printHelp = () => {
-			let help = `ChatKitty CLI\n\nUsage: chatkitty ${command.name} <command> [options]\n\nCommands:\n`;
+			let help = `${command.description}\n\n`;
+			help += 'Usage:\n';
+			help += `  $ chatkitty ${command.name} <command> [options]\n\n`;
+			help += 'Commands:\n';
 			for (const cmd in commands) {
 				help += `  - ${cmd}\n`;
 			}
 			console.log(help);
-		}
+		};
 
 		const name = args[0];
 
@@ -49,7 +52,7 @@ const buildCommand = (command) => {
 
 			return 1;
 		}
-	}
-}
+	};
+};
 
 module.exports = buildCommand;

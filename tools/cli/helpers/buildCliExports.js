@@ -235,7 +235,7 @@ const enumerateApiMethods = (api) => {
 };
 
 /** Resolve a method name using exact, kebab->camel, case-insensitive, and kebab-equivalence matching. */
-const resolveMethod = (api, requestedName, apiName) => {
+const resolveMethod = (api, requestedName) => {
 	const candidates = enumerateApiMethods(api);
 
 	// 1) exact
@@ -257,11 +257,11 @@ const resolveMethod = (api, requestedName, apiName) => {
 
 	const suggestions = candidates
 		.sort()
-		.map((n) => `• ${n} (aka ${camelToKebab(n)})`)
+		.map((n) => `• ${camelToKebab(n)}`)
 		.join('\n');
 
 	throw new Error(
-		`❌ Method '${requestedName}' not found on ${apiName}.\nAvailable commands:\n${suggestions}`,
+		`Method '${requestedName}' not found.\n\nAvailable commands:\n${suggestions}`,
 	);
 };
 
@@ -331,7 +331,7 @@ const buildCliExports = (config) => {
 		translators = {},
 		aliases = {},
 		defaults = {},
-		onUnknownArg = (flag) => console.error(`❌ Unknown argument: --${flag}`),
+		onUnknownArg = (flag) => console.error(`Unknown argument: --${flag}`),
 	} = config || {};
 
 	if (!apiName || typeof apiName !== 'string') {
@@ -354,10 +354,10 @@ const buildCliExports = (config) => {
 					return useChatKitty(async (chatkitty) => {
 						const api = chatkitty[apiName];
 						if (!api) {
-							throw new Error(`❌ ChatKitty instance has no property '${apiName}'.`);
+							throw new Error(`ChatKitty instance has no property '${apiName}'.`);
 						}
 
-						const resolvedName = resolveMethod(api, requested, apiName);
+						const resolvedName = resolveMethod(api, requested);
 						const fn = api[resolvedName];
 
 						const opts = parseArgs(input, {

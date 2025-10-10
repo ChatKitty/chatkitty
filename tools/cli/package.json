@@ -8,7 +8,7 @@
   "dependencies": {
     "@inquirer/prompts": "^7.8.6",
     "@moonrepo/cli": "^1.41.3",
-    "chatkitty": "^2.106.7",
+    "chatkitty": "^2.106.8",
     "json-colorizer": "^3.0.1",
     "keytar": "^7.9.0"
   }
