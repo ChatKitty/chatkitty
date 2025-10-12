@@ -1,5 +1,5 @@
 # Angular Example
 
 ```bash
-npx chatkitty angular-example:serve
+npx chatkitty run angular-example:serve
 ```

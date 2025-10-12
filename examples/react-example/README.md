@@ -1,5 +1,5 @@
 # React Example
 
 ```bash
-npx chatkitty react-example:serve
+npx chatkitty run react-example:serve
 ```

@@ -8,8 +8,4 @@ npm install @chatkitty/client
 ```
 
 ## Basic Usage
-Check out the [Vue Advanced Chat example](../../examples/html-example) for a complete working example.
-
-```bash
-npx chatkitty vue-advanced-chat-example:serve
-```
+Check out the [Vue Advanced Chat example](https://github.com/ChatKitty/chatkitty/tree/main/examples/vue-advanced-chat-example) for a complete working example.

@@ -7,11 +7,7 @@ npm install @chatkitty/core
 ```
 
 ## Basic Usage
-Check out the [HTML example](../../examples/html-example) for a complete working example.
-
-```bash
-npx chatkitty html-example:serve
-```
+Check out the [HTML example](https://github.com/ChatKitty/chatkitty/tree/main/examples/html-example) for a complete working example.
 
 ### Loading the Chat UI
 

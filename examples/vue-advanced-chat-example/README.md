@@ -1,5 +1,5 @@
 # Vue Advanced Chat Example
 
 ```bash
-npx chatkitty vue-advanced-chat-example:serve
+npx chatkitty run vue-advanced-chat-example:serve
 ```

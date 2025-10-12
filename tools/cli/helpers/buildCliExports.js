@@ -558,8 +558,7 @@ const buildCliExports = (config) => {
 			},
 
 			ownKeys() {
-				// include a synthetic "help" command alongside actual API methods
-				return ['help', ...listCommandKeys(apiName)];
+				return listCommandKeys(apiName);
 			},
 
 			getOwnPropertyDescriptor() {

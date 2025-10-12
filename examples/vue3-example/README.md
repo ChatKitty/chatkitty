@@ -1,5 +1,5 @@
 # Vue 3 Example
 
 ```bash
-npx chatkitty vue3-example:serve
+npx chatkitty run vue3-example:serve
 ```
