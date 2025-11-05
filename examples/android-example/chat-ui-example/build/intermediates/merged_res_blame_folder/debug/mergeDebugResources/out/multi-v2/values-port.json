@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.chatkitty.ui.chat-ui-example-mergeDebugResources-62:/values-port/values-port.xml",
+            "map": [
+                {
+                    "source": "/Users/kevingrafstrom/.gradle/caches/8.11.1/transforms/5630940ad78539424cc019b6d0a5c5b4/transformed/appcompat-1.7.0/res/values-port/values-port.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "55",
+                        "endOffsets": "106"
+                    }
+                }
+            ]
+        }
+    ]
+}
