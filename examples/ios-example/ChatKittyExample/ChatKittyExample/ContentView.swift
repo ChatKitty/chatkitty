@@ -11,7 +11,7 @@ import WebKit
 struct ContentView: View {
     var body: some View {
         VStack {
-            ChatUi(widgetId: "5S7NNZQ9gwANwfYV", username: "Kevin%20Grafstrom", mode: "sandbox")
+            ChatUi(widgetId: "5S7NNZQ9gwANwfYV", username: "kevingrafstrom", mode: "sandbox", apiKey: "2173cddb-5427-4a09-9742-1a1385cb6c46")
         }
     }
 }
@@ -20,6 +20,7 @@ struct ChatUi: UIViewRepresentable {
     let widgetId: String
     let username: String
     let mode: String
+    let apiKey: String
     
     func makeUIView(context: Context) -> WKWebView {
         let configuration = WKWebViewConfiguration()
@@ -33,7 +34,8 @@ struct ChatUi: UIViewRepresentable {
         let flexScript = """
         window.$flex = {
             web: {
-                initialize: () => {}
+                initialize: () => {},
+                onMessage: () => {}
             },
             callbacks: {},
             _resolveCallback: function(callbackId, result, error) {
@@ -82,6 +84,9 @@ struct ChatUi: UIViewRepresentable {
                 if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.onChatUiConnected) {
                     window.webkit.messageHandlers.onChatUiConnected.postMessage({});
                 }
+            },
+            onChatMounted: function() {
+
             }
         };
         """
@@ -191,7 +196,42 @@ struct ChatUi: UIViewRepresentable {
 
         // Store the webView reference in the coordinator
         context.coordinator.webView = webView
-        
+        let stompXBridge = FlexStompXBridge(webView: webView)
+        context.coordinator.stompXBridge = stompXBridge
+        // Create and configure StompX instance
+        let stompXConfig = StompXConfiguration(
+            isSecure: false,
+            host: "10.0.0.54:9001",
+            isDebug: true
+        )
+
+        // CRITICAL: Store strong reference to prevent deallocation
+        let stompx = StompXImpl(configuration: stompXConfig)
+        context.coordinator.stompX = stompx
+        context.coordinator.chatUiStompXInteractor = ChatUIStompXInteractor(stompX: stompx, stompXBridge: stompXBridge)
+
+        // Create the connect request
+        let connectRequest = StompXConnectRequest(
+            apiKey: apiKey,
+            username: username,
+            authParams: nil,
+            onConnected: {
+                print("✅ StompX connected successfully")
+            },
+            onConnectionLost: {
+                print("⚠️ StompX connection lost")
+            },
+            onConnectionResumed: {
+                print("✅ StompX connection resumed")
+            },
+            onError: { error in
+                print("❌ StompX error: \(error.localizedDescription)")
+            }
+        )
+
+        // Connect to StompX
+        stompx.connect(request: connectRequest)
+
         // Enable debugging in Safari (iOS 16.4+)
         if #available(iOS 16.4, *) {
             webView.isInspectable = true
@@ -214,10 +254,25 @@ struct ChatUi: UIViewRepresentable {
 
     class Coordinator: NSObject, WKNavigationDelegate, WKScriptMessageHandler {
         let parent: ChatUi
-        weak var webView: WKWebView?
+        var webView: WKWebView?
+        var stompXBridge: StompXBridge?
+        var chatUiStompXInteractor: ChatUIStompXInteractor?
+
+        // Add strong reference to keep StompX alive
+        var stompX: StompX?
         
         init(_ parent: ChatUi) {
             self.parent = parent
+        }
+
+        func resolveFlexPromise(callbackId: String?) {
+            // Send success response back to JavaScript
+            if let callbackId = callbackId {
+                let response = """
+                    window.$flex._resolveCallback('\(callbackId)', {success: true, connected: true}, null);
+                    """
+                self.webView?.evaluateJavaScript(response, completionHandler: nil)
+            }
         }
         
         // Handle console messages
@@ -244,30 +299,30 @@ struct ChatUi: UIViewRepresentable {
                 if let body = message.body as? [String: Any] {
                     let type = body["type"] as? String ?? "unknown"
                     let callbackId = body["_callbackId"] as? String
-                    print("📩 [Flex Message]: Type = \(type)")
-                    print("📩 [Flex Message]: Full body = \(body)")
-                    
-                    // Handle specific message types
-                    if type == "stompx:connect" {
-                        print("🔌 StompX connect request received")
-                        // Handle your stompx:connect logic here
-                    }
 
-                    // Send response back to JavaScript
-                    if let callbackId = callbackId {
-                        let response = """
-                        window.$flex._resolveCallback('\(callbackId)', {success: true}, null);
-                        """
-                        webView?.evaluateJavaScript(response) { _, error in
-                            if let error = error {
-                                print("❌ Error sending callback: \(error.localizedDescription)")
+                    do {
+                        // Convert dictionary to JSON Data
+                        let jsonData = try JSONSerialization.data(withJSONObject: body)
+
+                        // Decode to ChatUIMessage
+                        let decoder = JSONDecoder()
+                        let chatUIMessage = try decoder.decode(ChatUIMessage.self, from: jsonData)
+
+                        // Now you can use chatUIMessage
+                        if let chatUiStompXInteractor = self.chatUiStompXInteractor {
+                            DispatchQueue.main.async {
+                                chatUiStompXInteractor.onReceiveMessage(event: chatUIMessage)
                             }
                         }
+
+                    } catch {
+                        print("❌ Failed to decode ChatUIMessage: \(error)")
                     }
+
+                    self.resolveFlexPromise(callbackId: callbackId)
                 }
             } else if message.name == "onChatUiConnected" {
                 if let body = message.body as? [String: Any] {
-                    print("📩 [onChatUiConnected]: Full body = \(body)")
                     
                     // Call initialize with parameters
                     let initData = """
@@ -282,7 +337,7 @@ struct ChatUi: UIViewRepresentable {
                     }
                     """
 
-                    webView?.evaluateJavaScript("window.$flex.web.initialize(\(initData))") { result, error in
+                    webView?.evaluateJavaScript("window.$flex.web.initialize(\(initData)); void 0;") { result, error in
                         if let error = error {
                             print("❌ Error calling initialize: \(error.localizedDescription)")
                         } else {

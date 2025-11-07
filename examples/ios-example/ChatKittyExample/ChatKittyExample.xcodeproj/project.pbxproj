@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		39A0D1FE2EBC350700C4B96E /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 39A0D1FD2EBC350700C4B96E /* Moya */; };
+		39A0D2002EBC350A00C4B96E /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 39A0D1FF2EBC350A00C4B96E /* Starscream */; };
+		39A0D2022EBC351100C4B96E /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 39A0D2012EBC351100C4B96E /* RxSwift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		39A6FA272EBAC105004FE999 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +58,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39A0D2022EBC351100C4B96E /* RxSwift in Frameworks */,
+				39A0D1FE2EBC350700C4B96E /* Moya in Frameworks */,
+				39A0D2002EBC350A00C4B96E /* Starscream in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,12 +81,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		39A0D1FC2EBC350700C4B96E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		39A6FA102EBAC103004FE999 = {
 			isa = PBXGroup;
 			children = (
 				39A6FA1B2EBAC103004FE999 /* ChatKittyExample */,
 				39A6FA292EBAC105004FE999 /* ChatKittyExampleTests */,
 				39A6FA332EBAC105004FE999 /* ChatKittyExampleUITests */,
+				39A0D1FC2EBC350700C4B96E /* Frameworks */,
 				39A6FA1A2EBAC103004FE999 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -112,6 +129,9 @@
 			);
 			name = ChatKittyExample;
 			packageProductDependencies = (
+				39A0D1FD2EBC350700C4B96E /* Moya */,
+				39A0D1FF2EBC350A00C4B96E /* Starscream */,
+				39A0D2012EBC351100C4B96E /* RxSwift */,
 			);
 			productName = ChatKittyExample;
 			productReference = 39A6FA192EBAC103004FE999 /* ChatKittyExample.app */;
@@ -195,6 +215,11 @@
 			);
 			mainGroup = 39A6FA102EBAC103004FE999;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				39A6FA752EBC32C0004FE999 /* XCRemoteSwiftPackageReference "Moya" */,
+				39A6FA762EBC32D9004FE999 /* XCRemoteSwiftPackageReference "Starscream" */,
+				39A6FA772EBC32F6004FE999 /* XCRemoteSwiftPackageReference "RxSwift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 39A6FA1A2EBAC103004FE999 /* Products */;
 			projectDirPath = "";
@@ -570,6 +595,51 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		39A6FA752EBC32C0004FE999 /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 15.0.3;
+			};
+		};
+		39A6FA762EBC32D9004FE999 /* XCRemoteSwiftPackageReference "Starscream" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/daltoniam/Starscream";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.8;
+			};
+		};
+		39A6FA772EBC32F6004FE999 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.9.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		39A0D1FD2EBC350700C4B96E /* Moya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 39A6FA752EBC32C0004FE999 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
+		};
+		39A0D1FF2EBC350A00C4B96E /* Starscream */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 39A6FA762EBC32D9004FE999 /* XCRemoteSwiftPackageReference "Starscream" */;
+			productName = Starscream;
+		};
+		39A0D2012EBC351100C4B96E /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 39A6FA772EBC32F6004FE999 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 39A6FA112EBAC103004FE999 /* Project object */;
 }
