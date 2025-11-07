@@ -259,7 +259,7 @@ public final class WebsocketStompClient : StompX, WebSocketDelegate {
     public func sendFrame(_ frame: StompClientFrame) {
         if isConnected {
             socket.write(string: frame.description)
-            print("📡 Sent Frame: " + frame.description)
+            print("\n📡 Sent Frame: " + frame.description)
         } else {
             frameQueue.enqueue(frame)
         }
@@ -297,7 +297,7 @@ public final class WebsocketStompClient : StompX, WebSocketDelegate {
             onDisconnectedSubject.onNext(())
             websocketDidDisconnect(socket: client, error: nil)
         case .text(let text):
-            print("📨 Received Frame:")
+            print("\n📨 Received Frame:")
             print(text)
             websocketDidReceiveMessage(socket: client, text: text)
         case .binary(let data):

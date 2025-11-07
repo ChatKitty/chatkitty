@@ -22,8 +22,6 @@ final class FlexStompXBridge: StompXBridge {
                     result, error in
                     if let error = error {
                         print("❌ Error calling onMessage: \(error.localizedDescription)")
-                    } else {
-                        print("✅ Successfully called onMessage with data")
                     }
                 }
             }
@@ -42,8 +40,6 @@ final class FlexStompXBridge: StompXBridge {
                     result, error in
                     if let error = error {
                         print("❌ Error calling onMessage: \(error.localizedDescription)")
-                    } else {
-                        print("✅ Successfully called onMessage with no data")
                     }
                 }
             }
